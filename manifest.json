@@ -1,0 +1,17 @@
+{
+  "manifest_version": 2,
+
+  "name": "Refined Gitlab",
+  "description": "Extension which simplifies Gitlab",
+  "version": "0.1",
+  "homepage_url": "https://github.com/kiwicom/refined-gitlab",
+
+  "page_action": {
+    "default_icon": "icon.png",
+    "default_title": "Gitlab extension"
+  },
+  "permissions": [
+    "activeTab",
+    "https://github.com/*"
+  ]
+}
