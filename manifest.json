@@ -18,7 +18,8 @@
     {
       "run_at": "document_end",
       "matches": [
-        "https://gitlab.com/*"
+        "https://gitlab.com/*",
+        "https://gitlab.skypicker.com/*"
       ],
       "js": [
         "popup.js"
