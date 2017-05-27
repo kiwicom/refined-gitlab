@@ -2,14 +2,9 @@
 
 // TODO: Move to utils and add build step
 function rotateDiscussion(id) {
-  var elem = document.getElementById(id), value = elem.value;
-  var children = elem.children;
-  if (parseFloat(value) != NaN) {
-    elem.style.transform = "rotate(180deg)";
-    for (var i = 0; i < children.length; i++) {
-      children[i].style.transform = "rotate(-180deg)";
-    }
-  }
+    const elem = document.getElementById(id);
+    elem.style.display = "flex";
+    elem.style.flexDirection = "column-reverse";
 }
 
 const ROUTES = {
