@@ -7,6 +7,21 @@ const ROUTES = {
   MRS: "MRS"
 };
 
+// List of module categories
+// TODO: Refactor to settings
+const MODULES = [
+  "module",
+  "type",
+  "prio",
+  "process",
+  "qa",
+  "design",
+  "testing",
+  "waiting",
+  "weight",
+  "no-module"
+];
+
 // TODO: Move to utils and add build step
 function rotateDiscussion(id) {
   const elem = document.getElementById(id);
@@ -16,21 +31,6 @@ function rotateDiscussion(id) {
 
 // TODO: Move to utils and add build step
 function alignLabels(route) {
-
-  // List of module categories
-  // TODO: Refactor to settings
-  var MODULES = [
-    "module",
-    "type",
-    "prio",
-    "process",
-    "qa",
-    "design",
-    "testing",
-    "waiting",
-    "weight",
-    "no-module"
-  ];
 
   var itemsClassName;
   switch (route) {
