@@ -1,0 +1,46 @@
+.labels {
+    display: table;
+    table-layout: fixed;
+    width: 100%;
+}
+
+.labels-module {
+    display: table-cell;
+    position: relative;
+    padding-left: 5px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.labels-module::before {
+    content: "";
+    position: absolute;
+    right: 0px;
+    width: 1px;
+    top: 3px;
+    bottom: 0px;
+    background: rgba(0, 0, 0, .1);
+    z-index: 0;
+}
+
+.labels-module::after {
+    content: attr(data-module);
+    position: absolute;
+    left: 5px;
+    top: 4px;
+    font-size: 12px;
+    opacity: .15;
+    z-index: 0;
+}
+
+.label-link {
+    position: relative;
+    z-index: 10;
+    display: inline-block;
+}
+
+.color-label {
+    background-color: #9a9a9a !important;
+    color: white !important;
+}

@@ -1,18 +1,78 @@
 // const utils = require("./utils")
 
-// TODO: Move to utils and add build step
-function rotateDiscussion(id) {
-    const elem = document.getElementById(id);
-    elem.style.display = "flex";
-    elem.style.flexDirection = "column-reverse";
-}
-
 const ROUTES = {
   ISSUE: "ISSUE",
   ISSUES: "ISSUES",
   MR: "MR",
   MRS: "MRS"
 };
+
+// TODO: Move to utils and add build step
+function rotateDiscussion(id) {
+  const elem = document.getElementById(id);
+  elem.style.display = "flex";
+  elem.style.flexDirection = "column-reverse";
+}
+
+// TODO: Move to utils and add build step
+function alignLabels(route) {
+
+  // List of module categories
+  // TODO: Refactor to settings
+  var MODULES = [
+    "module",
+    "type",
+    "prio",
+    "process",
+    "qa",
+    "design",
+    "testing",
+    "waiting",
+    "weight",
+    "no-module"
+  ];
+
+  var itemsClassName;
+  switch (route) {
+    case ROUTES.MRS:
+      itemsClassName = "merge-request";
+      break;
+    case ROUTES.ISSUES:
+      itemsClassName = "issue-box";
+      break;
+  }
+
+  var itemsCollection = document.getElementsByClassName(itemsClassName);
+  var itemsArray = [].slice.call(itemsCollection);
+  itemsArray.forEach(mrEl => {
+    // prepare labelsEl to hold all labels
+    var labelsEl = document.createElement("div");
+    labelsEl.classList.add("labels");
+
+    var moduleEls = {};
+    MODULES.forEach(module => {
+      var el = document.createElement("div");
+      el.classList.add("labels-module");
+      el.setAttribute("data-module", module);
+      labelsEl.appendChild(el);
+      moduleEls[module] = el;
+    });
+
+    var labelsCollection = mrEl.getElementsByClassName("label-link");
+    var labelsArray = [].slice.call(labelsCollection);
+    labelsArray.forEach(label => {
+      var text = label.textContent;
+      var textParts = text.split("/");
+      var module = textParts[0];
+
+      var moduleEl = moduleEls[module] || moduleEls["no-module"];
+      moduleEl.appendChild(label);
+    });
+
+    // insert
+    mrEl.getElementsByClassName("issue-info-container")[0].appendChild(labelsEl);
+  });
+}
 
 const pathnameToRoute = input => {
   // /kiwi/frontend/merge_requests/1800
@@ -36,13 +96,18 @@ function main() {
     case ROUTES.MR:
     case ROUTES.ISSUE:
       rotateDiscussion("notes-list");
+    case ROUTES.MRS:
+    case ROUTES.ISSUES:
+      alignLabels(route);
   }
 }
 
 main();
 
 // Exports for tests
-module.exports = {
-  ROUTES,
-  pathnameToRoute
-};
+if (typeof module !== "undefined") {
+  module.exports = {
+    ROUTES,
+    pathnameToRoute
+  };
+}
