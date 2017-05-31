@@ -13,5 +13,17 @@
   "permissions": [
     "activeTab",
     "https://github.com/*"
+  ],
+  "content_scripts": [
+    {
+      "run_at": "document_end",
+      "matches": [
+        "https://gitlab.com/*",
+        "https://gitlab.skypicker.com/*"
+      ],
+      "js": [
+        "popup.js"
+      ]
+    }
   ]
 }
