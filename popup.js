@@ -1,5 +1,24 @@
 // const utils = require("./utils")
 
+// TODO: Move to utils and add build step
+function rotateDiscussion(id) {
+    const elem = document.getElementById(id);
+    elem.style.display = "flex";
+    elem.style.flexDirection = "column-reverse";
+}
+
+// TODO: Move to utils and add build step
+function expandSidePanel(remove, add, aside, toggle, pageGutter) {
+  const sidebar = document.getElementsByTagName(aside)[0];
+  sidebar.classList.remove(remove);
+  sidebar.classList.add(add);
+  const button = document.getElementsByClassName(toggle)[1];
+  button.style.display = "none";
+  const page = document.getElementsByClassName(pageGutter)[0];
+  page.classList.remove(remove);
+  page.classList.add(add);
+}
+
 const ROUTES = {
   ISSUE: "ISSUE",
   ISSUES: "ISSUES",
@@ -21,13 +40,6 @@ const MODULES = [
   "weight",
   "no-module"
 ];
-
-// TODO: Move to utils and add build step
-function rotateDiscussion(id) {
-  const elem = document.getElementById(id);
-  elem.style.display = "flex";
-  elem.style.flexDirection = "column-reverse";
-}
 
 // TODO: Move to utils and add build step
 function alignLabels(route) {
@@ -96,6 +108,7 @@ function main() {
     case ROUTES.MR:
     case ROUTES.ISSUE:
       rotateDiscussion("notes-list");
+      expandSidePanel("right-sidebar-collapsed", "right-sidebar-expanded", "ASIDE", "gutter-toggle", "page-gutter");
     case ROUTES.MRS:
     case ROUTES.ISSUES:
       alignLabels(route);
