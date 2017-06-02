@@ -92,11 +92,15 @@ function filterItems(box) {
       document.getElementsByClassName("current-user")[0] !== undefined) {
       if (e.keyCode === 81) {
         var username = getUsername();
+        var opened = '';
         var url = `&author_username=${username}&assignee_username=${username}`;
         if (window.location.href.includes(url)){
           window.location.href = window.location.href.replace(url, '');
         } else {
-          window.location.href += url;
+          if (window.location.href.endsWith('merge_requests') || window.location.href.endsWith('issues')) {
+            opened += '?scope=all&state=opened';
+          }
+          window.location.href += opened + url;
         }
       }
     }
@@ -135,9 +139,6 @@ function main() {
       break;
     case ROUTES.MRS:
     case ROUTES.ISSUES:
-      if (window.location.href.endsWith('merge_requests') || window.location.href.endsWith('issues')) {
-        window.location.href += '?scope=all&state=opened';
-      }
       filterItems("filtered-search-box");
       alignLabels(route);
   }
