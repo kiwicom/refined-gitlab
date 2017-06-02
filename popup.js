@@ -2,9 +2,13 @@
 
 // TODO: Move to utils and add build step
 function rotateDiscussion(id) {
-    const elem = document.getElementById(id);
-    elem.style.display = "flex";
-    elem.style.flexDirection = "column-reverse";
+  const elem = document.getElementById(id);
+  elem.style.display = "flex";
+  elem.style.flexDirection = "column-reverse";
+  var a = document.getElementsByClassName('notes-form')[0];
+  var b = document.getElementById('notes');
+  b.removeChild(a);
+  b.insertBefore(a, b.childNodes[0]);
 }
 
 // TODO: Move to utils and add build step
@@ -86,6 +90,29 @@ function alignLabels(route) {
   });
 }
 
+function filterItems(box) {
+  document.body.onkeydown = function (e) {
+    if (!document.getElementsByClassName(box)[0].classList.contains("focus") &&
+      document.getElementsByClassName("current-user")[0] !== undefined) {
+      if (e.keyCode === 81) {
+        var username = getUsername();
+        var url = `&author_username=${username}&assignee_username=${username}`;
+        if (window.location.href.includes(url)){
+          window.location.href = window.location.href.replace(url, '');
+        } else {
+          window.location.href += url;
+        }
+      }
+    }
+  };
+}
+
+function getUsername() {
+  let user = document.getElementsByClassName("current-user")[0].textContent;
+  user = user.split("\n");
+  return user[4].substring(1);
+}
+
 const pathnameToRoute = input => {
   // /kiwi/frontend/merge_requests/1800
   const parts = input.split("/");
@@ -109,8 +136,10 @@ function main() {
     case ROUTES.ISSUE:
       rotateDiscussion("notes-list");
       expandSidePanel("right-sidebar-collapsed", "right-sidebar-expanded", "ASIDE", "gutter-toggle", "page-gutter");
+      break;
     case ROUTES.MRS:
     case ROUTES.ISSUES:
+      filterItems("filtered-search-box");
       alignLabels(route);
   }
 }
