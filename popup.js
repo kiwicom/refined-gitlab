@@ -135,6 +135,9 @@ function main() {
       break;
     case ROUTES.MRS:
     case ROUTES.ISSUES:
+      if (window.location.href.endsWith('merge_requests') || window.location.href.endsWith('issues')) {
+        window.location.href += '?scope=all&state=opened';
+      }
       filterItems("filtered-search-box");
       alignLabels(route);
   }
