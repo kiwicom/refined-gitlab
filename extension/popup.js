@@ -2,9 +2,14 @@
 
 // TODO: Move to utils and add build step
 function rotateDiscussion(id) {
-    const elem = document.getElementById(id);
-    elem.style.display = "flex";
-    elem.style.flexDirection = "column-reverse";
+  const elem = document.getElementById(id);
+  elem.style.display = "flex";
+  elem.style.flexDirection = "column-reverse";
+  var a = document.getElementsByClassName('notes-form')[0];
+  var b = document.getElementById('notes');
+  b.removeChild(a);
+  b.insertBefore(a, b.childNodes[0]);
+
 }
 
 // TODO: Move to utils and add build step
