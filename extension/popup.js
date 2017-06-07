@@ -5,11 +5,10 @@ function rotateDiscussion(id) {
   const elem = document.getElementById(id);
   elem.style.display = "flex";
   elem.style.flexDirection = "column-reverse";
-  var a = document.getElementsByClassName('notes-form')[0];
-  var b = document.getElementById('notes');
+  var a = document.getElementsByClassName("notes-form")[0];
+  var b = a.parentElement;
   b.removeChild(a);
   b.insertBefore(a, b.childNodes[0]);
-
 }
 
 // TODO: Move to utils and add build step
@@ -93,8 +92,8 @@ function alignLabels(route) {
 
 // TODO: Move to utils and add build step
 function divideLabels() {
-  var labelsEl = document.getElementsByClassName('issuable-show-labels')[0];
-  var labelsCollection = labelsEl.getElementsByTagName('a');
+  var labelsEl = document.getElementsByClassName("issuable-show-labels")[0];
+  var labelsCollection = labelsEl.getElementsByTagName("a");
   var labelsArray = [].slice.call(labelsCollection);
 
   var moduleEls = {};
@@ -110,10 +109,9 @@ function divideLabels() {
     var text = labelEl.textContent;
     var textParts = text.split("/");
     var module = textParts[0];
-    moduleEls[module].appendChild(labelEl)
-  })
+    moduleEls[module].appendChild(labelEl);
+  });
 }
-
 
 function filterItems(box) {
   document.body.onkeydown = function (e) {
@@ -121,13 +119,13 @@ function filterItems(box) {
       document.getElementsByClassName("current-user")[0] !== undefined) {
       if (e.keyCode === 81) {
         var username = getUsername();
-        var opened = '';
+        var opened = "";
         var url = `&author_username=${username}&assignee_username=${username}`;
-        if (window.location.href.includes(url)){
-          window.location.href = window.location.href.replace(url, '');
+        if (window.location.href.includes(url)) {
+          window.location.href = window.location.href.replace(url, "");
         } else {
-          if (window.location.href.endsWith('merge_requests') || window.location.href.endsWith('issues')) {
-            opened += '?scope=all&state=opened';
+          if (window.location.href.endsWith("merge_requests") || window.location.href.endsWith("issues")) {
+            opened += "?scope=all&state=opened";
           }
           window.location.href += opened + url;
         }
