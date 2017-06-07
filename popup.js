@@ -86,6 +86,30 @@ function alignLabels(route) {
   });
 }
 
+// TODO: Move to utils and add build step
+function divideLabels() {
+  var labelsEl = document.getElementsByClassName('issuable-show-labels')[0];
+  var labelsCollection = labelsEl.getElementsByTagName('a');
+  var labelsArray = [].slice.call(labelsCollection);
+
+  var moduleEls = {};
+  MODULES.forEach(module => {
+    var el = document.createElement("div");
+    el.classList.add("labels-module");
+    el.setAttribute("data-module", module);
+    labelsEl.appendChild(el);
+    moduleEls[module] = el;
+  });
+
+  labelsArray.forEach(labelEl => {
+    var text = labelEl.textContent;
+    var textParts = text.split("/");
+    var module = textParts[0];
+    moduleEls[module].appendChild(labelEl)
+  })
+}
+
+
 function filterItems(box) {
   document.body.onkeydown = function (e) {
     if (!document.getElementsByClassName(box)[0].classList.contains("focus") &&
@@ -136,6 +160,7 @@ function main() {
     case ROUTES.ISSUE:
       rotateDiscussion("notes-list");
       expandSidePanel("right-sidebar-collapsed", "right-sidebar-expanded", "ASIDE", "gutter-toggle", "page-gutter");
+      divideLabels();
       break;
     case ROUTES.MRS:
     case ROUTES.ISSUES:
