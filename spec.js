@@ -1,4 +1,4 @@
-const { pathnameToRoute, ROUTES } = require("./popup");
+const { pathnameToRoute, ROUTES } = require("./extension/popup");
 
 test('pathnameToRoute', () => {
   expect(pathnameToRoute('/frontend/frontend/issues/2751')).toBe(ROUTES.ISSUE);
