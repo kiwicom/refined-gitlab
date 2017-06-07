@@ -86,6 +86,30 @@ function alignLabels(route) {
   });
 }
 
+// TODO: Move to utils and add build step
+function divideLabels() {
+  var labelsEl = document.getElementsByClassName('issuable-show-labels')[0];
+  var labelsCollection = labelsEl.getElementsByTagName('a');
+  var labelsArray = [].slice.call(labelsCollection);
+
+  var moduleEls = {};
+  MODULES.forEach(module => {
+    var el = document.createElement("div");
+    el.classList.add("labels-module");
+    el.setAttribute("data-module", module);
+    labelsEl.appendChild(el);
+    moduleEls[module] = el;
+  });
+
+  labelsArray.forEach(labelEl => {
+    var text = labelEl.textContent;
+    var textParts = text.split("/");
+    var module = textParts[0];
+    moduleEls[module].appendChild(labelEl)
+  })
+}
+
+
 const pathnameToRoute = input => {
   // /kiwi/frontend/merge_requests/1800
   const parts = input.split("/");
@@ -109,6 +133,7 @@ function main() {
     case ROUTES.ISSUE:
       rotateDiscussion("notes-list");
       expandSidePanel("right-sidebar-collapsed", "right-sidebar-expanded", "ASIDE", "gutter-toggle", "page-gutter");
+      divideLabels();
     case ROUTES.MRS:
     case ROUTES.ISSUES:
       alignLabels(route);

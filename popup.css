@@ -4,7 +4,7 @@
     width: 100%;
 }
 
-.labels-module {
+.content-list .labels-module {
     display: table-cell;
     position: relative;
     padding-left: 5px;
@@ -13,7 +13,7 @@
     text-overflow: ellipsis;
 }
 
-.labels-module::before {
+.content-list .labels-module::before {
     content: "";
     position: absolute;
     right: 0px;
@@ -24,7 +24,7 @@
     z-index: 0;
 }
 
-.labels-module::after {
+.content-list .labels-module::after {
     content: attr(data-module);
     position: absolute;
     left: 5px;
@@ -34,10 +34,24 @@
     z-index: 0;
 }
 
-.label-link {
+#content-body .label-link {
     position: relative;
     z-index: 10;
     display: inline-block;
+}
+
+
+.right-sidebar .labels-module {
+    min-height: 36px;
+}
+
+.right-sidebar .labels-module::before {
+    content: attr(data-module);
+    display: block;
+    margin-top: 8px;
+    margin-bottom: 3px;
+    font-size: 12px;
+    opacity: .5;
 }
 
 .color-label {
