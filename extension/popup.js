@@ -23,6 +23,15 @@ function expandSidePanel(remove, add, aside, toggle, pageGutter) {
   page.classList.add(add);
 }
 
+function expandAll() {
+  var a = location.pathname.split('/');
+  if (a[5] === 'diffs' && a[3] === 'merge_requests'){
+    var url = '?expand_all_diffs=1';
+    if (!window.location.href.includes(url))
+    window.location.href += url;
+  }
+}
+
 const ROUTES = {
   ISSUE: "ISSUE",
   ISSUES: "ISSUES",
@@ -161,6 +170,7 @@ function main() {
   switch (route) {
     case ROUTES.MR:
     case ROUTES.ISSUE:
+      expandAll();
       rotateDiscussion("notes-list");
       expandSidePanel("right-sidebar-collapsed", "right-sidebar-expanded", "ASIDE", "gutter-toggle", "page-gutter");
       divideLabels();
