@@ -3,7 +3,7 @@
 
   "name": "Refined Gitlab",
   "description": "Extension which simplifies Gitlab",
-  "version": "0.3",
+  "version": "0.4",
   "homepage_url": "https://github.com/kiwicom/refined-gitlab",
 
   "page_action": {
