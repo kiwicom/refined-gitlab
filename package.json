@@ -38,5 +38,10 @@
   "bugs": {
     "url": "https://github.com/kiwicom/refined-gitlab/issues"
   },
-  "homepage": "https://github.com/kiwicom/refined-gitlab#readme"
+  "homepage": "https://github.com/kiwicom/refined-gitlab#readme",
+  "babel": {
+    "plugins": [
+      "transform-es2015-modules-commonjs"
+    ]
+  }
 }
