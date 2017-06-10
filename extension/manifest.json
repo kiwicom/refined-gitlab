@@ -22,10 +22,10 @@
         "https://gitlab.skypicker.com/*"
       ],
       "js": [
-        "popup.js"
+        "content.js"
       ],
       "css": [
-        "popup.css"
+        "content.css"
       ]
     }
   ]

@@ -1,4 +1,5 @@
-const { pathnameToRoute, ROUTES } = require("./extension/popup");
+import pathnameToRoute from "./src/libs/helpers/pathnameToRoute";
+import ROUTES from "./src/libs/ROUTES";
 
 test('pathnameToRoute', () => {
   expect(pathnameToRoute('/frontend/frontend/issues/2751')).toBe(ROUTES.ISSUE);
