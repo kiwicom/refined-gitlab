@@ -13,7 +13,8 @@
   "scripts": {
     "test": "jest ...",
     "prettier": "prettier",
-    "release": "cd extension && webstore upload --auto-publish"
+    "release": "cd extension && webstore upload --auto-publish",
+    "update-version": "dot-json extension/manifest.json version $(date -u +%y.%-m.%-d.%-H%M)"
   },
   "repository": {
     "type": "git",
