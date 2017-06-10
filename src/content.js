@@ -16,7 +16,7 @@ switch (route) {
 	case ROUTES.ISSUE:
 		expandAll();
 		rotateDiscussion("notes-list");
-		expandSidePanel("right-sidebar-collapsed", "right-sidebar-expanded", "ASIDE", "gutter-toggle", "page-gutter");
+		expandSidePanel();
 		divideLabels();
 		break;
 	case ROUTES.MRS:
