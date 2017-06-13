@@ -8,6 +8,7 @@ import expandSidePanel from "./libs/transformations/expandSidePanel";
 import divideLabels from "./libs/transformations/divideLabels";
 import filterItems from "./libs/transformations/filterItems";
 import alignLabels from "./libs/transformations/alignLabels";
+import otherDeployLinks from "./libs/transformations/otherDeployLinks";
 
 
 const route = pathnameToRoute(location.pathname);
@@ -18,6 +19,7 @@ switch (route) {
 		rotateDiscussion("notes-list");
 		expandSidePanel();
 		divideLabels();
+		otherDeployLinks();
 		break;
 	case ROUTES.MRS:
 	case ROUTES.ISSUES:
