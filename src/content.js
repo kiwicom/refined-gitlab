@@ -10,6 +10,7 @@ import divideLabels from "./libs/transformations/divideLabels";
 import filterItems from "./libs/transformations/filterItems";
 import alignLabels from "./libs/transformations/alignLabels";
 import appendTo from "./libs/transformations/appendTo";
+import showUsername from "./libs/transformations/showUsername";
 
 storage.load().then(() => {
   const route = pathnameToRoute(location.pathname);
@@ -21,6 +22,7 @@ storage.load().then(() => {
       expandSidePanel();
       divideLabels();
       appendTo();
+      showUsername();
       break;
     case ROUTES.MRS:
     case ROUTES.ISSUES:
