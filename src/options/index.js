@@ -1,25 +1,24 @@
-const cdForm = document.querySelector('#custom-domain');
-const cdInput = document.querySelector('#custom-domain-origin');
+import components from './components';
+import * as storage from './storage';
+import { options } from './options';
 
-if (!chrome.permissions) {
-	cdForm.disabled = true;
-	cdForm.querySelector('p').textContent = 'Your browser doesn’t support the required Permission API.';
-}
+const formEl = document.querySelector('#options');
 
-cdForm.addEventListener('submit', event => {
-	event.preventDefault();
-
-	const origin = new URL(cdInput.value).origin;
-
-	if (origin) {
-		chrome.permissions.request({
-			origins: [
-				`${origin}/*`
-			]
-		}, granted => {
-			if (granted) {
-				cdForm.reset();
-			}
+storage.load().then(() => {
+	options.forEach((item) => {
+		formEl.innerHTML += components({
+			...item,
+			value: storage.get(item.name),
 		});
+	});
+});
+
+formEl.addEventListener('change', ({ target }) => {
+	const tag = target.tagName.toLowerCase();
+
+	if (tag === 'input' && target.type === 'checkbox') {
+		storage.set(target.name, target.checked);
+	} else {
+		storage.set(target.name, target.value);
 	}
 });
