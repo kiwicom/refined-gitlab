@@ -9,7 +9,7 @@ import expandSidePanel from "./libs/transformations/expandSidePanel";
 import divideLabels from "./libs/transformations/divideLabels";
 import filterItems from "./libs/transformations/filterItems";
 import alignLabels from "./libs/transformations/alignLabels";
-import otherDeployLinks from "./libs/transformations/otherDeployLinks";
+import appendTo from "./libs/transformations/appendTo";
 
 storage.load().then(() => {
   const route = pathnameToRoute(location.pathname);
@@ -20,7 +20,7 @@ storage.load().then(() => {
       rotateDiscussion("notes-list");
       expandSidePanel();
       divideLabels();
-      otherDeployLinks();
+      appendTo();
       break;
     case ROUTES.MRS:
     case ROUTES.ISSUES:
