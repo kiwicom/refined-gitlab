@@ -1,4 +1,4 @@
-import * as options from "../options";
+import * as storage from "./../../options/storage"
 
 export default () => {
 	var labelsEl = document.getElementsByClassName("issuable-show-labels")[0];
@@ -6,7 +6,7 @@ export default () => {
 	var labelsArray = [].slice.call(labelsCollection);
 
 	var moduleEls = {};
-	options.modules.forEach(module => {
+	storage.get("labelCategories").split(",").forEach(module => {
 		var el = document.createElement("div");
 		el.classList.add("labels-module");
 		el.setAttribute("data-module", module);

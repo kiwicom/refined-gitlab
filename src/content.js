@@ -1,4 +1,5 @@
 import ROUTES from "./libs/ROUTES";
+import * as storage from "./options/storage";
 
 import pathnameToRoute from "./libs/helpers/pathnameToRoute";
 
@@ -10,19 +11,20 @@ import filterItems from "./libs/transformations/filterItems";
 import alignLabels from "./libs/transformations/alignLabels";
 import otherDeployLinks from "./libs/transformations/otherDeployLinks";
 
-
-const route = pathnameToRoute(location.pathname);
-switch (route) {
-	case ROUTES.MR:
-	case ROUTES.ISSUE:
-		expandAll();
-		rotateDiscussion("notes-list");
-		expandSidePanel();
-		divideLabels();
-		otherDeployLinks();
-		break;
-	case ROUTES.MRS:
-	case ROUTES.ISSUES:
-		filterItems("filtered-search-box");
-		alignLabels(route);
-}
+storage.load().then(() => {
+  const route = pathnameToRoute(location.pathname);
+  switch (route) {
+    case ROUTES.MR:
+    case ROUTES.ISSUE:
+      expandAll();
+      rotateDiscussion("notes-list");
+      expandSidePanel();
+      divideLabels();
+      otherDeployLinks();
+      break;
+    case ROUTES.MRS:
+    case ROUTES.ISSUES:
+      filterItems("filtered-search-box");
+      alignLabels(route);
+  }
+});
