@@ -22,7 +22,7 @@ storage.load().then(() => {
       expandSidePanel();
       divideLabels();
       appendTo();
-      showUsername();
+      showUsername(route);
       break;
     case ROUTES.MRS:
     case ROUTES.ISSUES:
