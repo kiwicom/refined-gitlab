@@ -56,7 +56,8 @@ export default (route) => {
 			break;
 		case ROUTES.MRS:
 		case ROUTES.ISSUES:
-			const a = document.getElementsByClassName('author_link');
+			let a = document.getElementsByClassName('author_link');
+			a = [].slice.call(a);
 			a.map(element => {
 				const username = getUsername(element);
 				if (element.classList.contains('has-tooltip')) {

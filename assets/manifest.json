@@ -19,6 +19,9 @@
 	"page": "options.html",
 	"chrome_style": true
   },
+  "web_accessible_resources": [
+	"agent.js"
+  ],
   "content_scripts": [
     {
       "run_at": "document_end",

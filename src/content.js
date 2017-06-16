@@ -11,12 +11,14 @@ import filterItems from "./libs/transformations/filterItems";
 import alignLabels from "./libs/transformations/alignLabels";
 import appendTo from "./libs/transformations/appendTo";
 import showUsername from "./libs/transformations/showUsername";
+import assignMe from "./libs/transformations/assignMe";
 
 storage.load().then(() => {
   const route = pathnameToRoute(location.pathname);
   switch (route) {
     case ROUTES.MR:
     case ROUTES.ISSUE:
+			assignMe();
       expandAll();
       rotateDiscussion("notes-list");
       expandSidePanel();
@@ -28,5 +30,6 @@ storage.load().then(() => {
     case ROUTES.ISSUES:
       filterItems("filtered-search-box");
       alignLabels(route);
+			showUsername(route);
   }
 });

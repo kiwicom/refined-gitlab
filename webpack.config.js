@@ -5,7 +5,8 @@ module.exports = {
   entry: {
     content: "./src/content",
     background: "./src/background",
-    options: "./src/options"
+    options: "./src/options",
+		agent: "./src/agent",
   },
   devtool: "source-map",
   output: {
