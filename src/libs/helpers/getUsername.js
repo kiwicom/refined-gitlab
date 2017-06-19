@@ -1,1 +1,1 @@
-export default (element) => element.href.split('/')[3];
+export default element => element.href.split("/")[3];

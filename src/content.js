@@ -18,7 +18,7 @@ storage.load().then(() => {
   switch (route) {
     case ROUTES.MR:
     case ROUTES.ISSUE:
-			assignMe();
+      assignMe();
       expandAll();
       rotateDiscussion("notes-list");
       expandSidePanel();
@@ -30,6 +30,6 @@ storage.load().then(() => {
     case ROUTES.ISSUES:
       filterItems("filtered-search-box");
       alignLabels(route);
-			showUsername(route);
+      showUsername(route);
   }
 });
