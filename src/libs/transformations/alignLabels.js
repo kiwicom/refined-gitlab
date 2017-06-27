@@ -20,13 +20,17 @@ export default route => {
     labelsEl.classList.add("labels");
 
     var moduleEls = {};
-    storage.get("labelCategories").split(",").forEach(module => {
-      var el = document.createElement("div");
-      el.classList.add("labels-module");
-      el.setAttribute("data-module", module);
-      labelsEl.appendChild(el);
-      moduleEls[module] = el;
-    });
+    storage
+      .get("labelCategories")
+      .split(",")
+      .concat(["no-module"])
+      .forEach(module => {
+        var el = document.createElement("div");
+        el.classList.add("labels-module");
+        el.setAttribute("data-module", module);
+        labelsEl.appendChild(el);
+        moduleEls[module] = el;
+      });
 
     var labelsCollection = mrEl.getElementsByClassName("label-link");
     var labelsArray = [].slice.call(labelsCollection);
