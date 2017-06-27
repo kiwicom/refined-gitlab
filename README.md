@@ -8,6 +8,8 @@ https://chrome.google.com/webstore/detail/pogpjdbfdfnmlegpbhdmlebognmbamko
 * Force-expanded sidepanel
 * Appended custom links to Pipeline and Deploy sections
 * `Q` keyboard shortcut to filter own issues/merge requests
+* [ ] Show usernames instead of real names
+* [ ] Keyboard shortcut to "Assign to myself"
 
 ## Develop
 
