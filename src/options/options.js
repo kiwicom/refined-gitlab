@@ -20,4 +20,11 @@ export const options = [
 		description: "",
 		defaultValue: "<a href='registry.skypicker.com:5005/<%= group %>/<%= project %>:<%= hash %>' target='_blank'>Registry</a>"
 	},
+	{
+		type: "checkbox",
+		name: "disableLabelColors",
+		label: "Disable label colors",
+		description: "",
+		defaultValue: false
+	},
 ];

@@ -10,6 +10,7 @@ https://chrome.google.com/webstore/detail/pogpjdbfdfnmlegpbhdmlebognmbamko
 * `Q` keyboard shortcut to filter own issues/merge requests
 * [ ] Show usernames instead of real names
 * [ ] Keyboard shortcut to "Assign to myself"
+* Disable label colors `configurable`
 
 ## Develop
 

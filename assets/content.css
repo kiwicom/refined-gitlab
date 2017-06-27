@@ -54,7 +54,8 @@
     opacity: .5;
 }
 
-.color-label {
+
+body.refined-gitlab--disableLabelColors .color-label {
     background-color: #9a9a9a !important;
     color: white !important;
 }

@@ -39,4 +39,9 @@ storage.load().then(() => {
       // showUsername(route);
       break;
   }
+
+
+  if (storage.get("disableLabelColors")) {
+  	document.body.classList.add("refined-gitlab--disableLabelColors")
+	}
 });
