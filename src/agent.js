@@ -1,5 +1,7 @@
-document.addEventListener("RW759_connectExtension", function(e) {
-  if (e.detail.fn === "selfAssignMr") {
+import FUNCTIONS from "./libs/FUNCTIONS";
+
+document.addEventListener("refined-gitlab", function(e) {
+  if (e.detail.fn === FUNCTIONS.SELF_ASSIGN_MR) {
     const { id, userId, group, project } = e.detail;
     $.ajax({
       type: "PUT",

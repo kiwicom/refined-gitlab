@@ -1,21 +1,18 @@
-export default () => {
-  const s = document.createElement("script");
-  s.src = chrome.runtime.getURL("agent.js");
-  // s.onload = function() {
-  // 	this.remove();
-  // };
-  (document.head || document.documentElement).appendChild(s);
+import FUNCTIONS from "../FUNCTIONS";
 
+export default () => {
   const parts = location.pathname.split("/");
   const userId = document
     .getElementsByClassName("header-user-avatar")[0]
     .src.split("/")[7];
+
   if (userId !== undefined) {
+  	// TODO: Do on keystoke, not page load
     setTimeout(() => {
       document.dispatchEvent(
-        new CustomEvent("RW759_connectExtension", {
+        new CustomEvent("refined-gitlab", {
           detail: {
-            fn: "selfAssignMr",
+            fn: FUNCTIONS.SELF_ASSIGN_MR,
             id: parts[4],
             userId: userId,
             group: parts[1],
