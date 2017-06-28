@@ -27,4 +27,11 @@ export const options = [
 		description: "",
 		defaultValue: false
 	},
+	{
+		type: "checkbox",
+		name: "disableKeyboardShortcuts",
+		label: "Disable keyboard shortcuts",
+		description: "",
+		defaultValue: false
+	},
 ];
