@@ -44,4 +44,8 @@ storage.load().then(() => {
   if (storage.get("disableLabelColors")) {
   	document.body.classList.add("refined-gitlab--disableLabelColors")
 	}
+
+	if (storage.get("hideRepoAvatars")) {
+		document.body.classList.add("refined-gitlab--hideRepoAvatars")
+	}
 });

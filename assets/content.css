@@ -59,3 +59,11 @@ body.refined-gitlab--disableLabelColors .color-label {
     background-color: #9a9a9a !important;
     color: white !important;
 }
+
+body.refined-gitlab--hideRepoAvatars .project-avatar {
+	display: none;
+}
+
+body.refined-gitlab--hideRepoAvatars .project-row .avatar-container {
+	display: none;
+}

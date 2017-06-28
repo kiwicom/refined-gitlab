@@ -27,4 +27,11 @@ export const options = [
 		description: "",
 		defaultValue: false
 	},
+	{
+		type: "checkbox",
+		name: "hideRepoAvatars",
+		label: "Hide repo avatars",
+		description: "",
+		defaultValue: true
+	},
 ];

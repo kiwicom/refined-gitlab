@@ -11,6 +11,7 @@ https://chrome.google.com/webstore/detail/pogpjdbfdfnmlegpbhdmlebognmbamko
 * [ ] Show usernames instead of real names
 * [ ] Keyboard shortcut to "Assign to myself"
 * Disable label colors `configurable`
+* Hide repo avatars `configurable`
 
 ## Develop
 
