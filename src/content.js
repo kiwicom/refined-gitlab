@@ -44,4 +44,11 @@ storage.load().then(() => {
   if (storage.get("disableLabelColors")) {
   	document.body.classList.add("refined-gitlab--disableLabelColors")
 	}
+
+
+	if (storage.get("disableKeyboardShortcuts")) {
+		document.body.addEventListener("keydown", (ev) => {
+			debugger
+		}, true) // TODO: Explain why useCapture is/is not important
+	}
 });
