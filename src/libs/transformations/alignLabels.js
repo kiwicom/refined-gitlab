@@ -2,7 +2,7 @@ import ROUTES from "../ROUTES";
 import * as storage from "./../../options/storage";
 
 export default route => {
-  var itemsClassName;
+  let itemsClassName;
   switch (route) {
     case ROUTES.MRS:
       itemsClassName = "merge-request";
@@ -10,36 +10,38 @@ export default route => {
     case ROUTES.ISSUES:
       itemsClassName = "issue-box";
       break;
+    default:
+      throw new Error("Unexpected");
   }
 
-  var itemsCollection = document.getElementsByClassName(itemsClassName);
-  var itemsArray = [].slice.call(itemsCollection);
+  const itemsCollection = document.getElementsByClassName(itemsClassName);
+  const itemsArray = [].slice.call(itemsCollection);
   itemsArray.forEach(mrEl => {
     // prepare labelsEl to hold all labels
-    var labelsEl = document.createElement("div");
+    const labelsEl = document.createElement("div");
     labelsEl.classList.add("labels");
 
-    var moduleEls = {};
+    const moduleEls = {};
     storage
       .get("labelCategories")
       .split(",")
       .concat(["no-module"])
       .forEach(module => {
-        var el = document.createElement("div");
+        const el = document.createElement("div");
         el.classList.add("labels-module");
         el.setAttribute("data-module", module);
         labelsEl.appendChild(el);
         moduleEls[module] = el;
       });
 
-    var labelsCollection = mrEl.getElementsByClassName("label-link");
-    var labelsArray = [].slice.call(labelsCollection);
+    const labelsCollection = mrEl.getElementsByClassName("label-link");
+    const labelsArray = [].slice.call(labelsCollection);
     labelsArray.forEach(label => {
-      var text = label.textContent;
-      var textParts = text.split("/");
-      var module = textParts[0];
+      const text = label.textContent;
+      const textParts = text.split("/");
+      const module = textParts[0];
 
-      var moduleEl = moduleEls[module] || moduleEls["no-module"];
+      const moduleEl = moduleEls[module] || moduleEls["no-module"];
       moduleEl.appendChild(label);
     });
 

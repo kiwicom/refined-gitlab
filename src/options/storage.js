@@ -1,6 +1,6 @@
 import uuid from "uuid";
 import ChromePromise from "chrome-promise";
-import { options } from "./options";
+import options from "./options";
 
 const chromep = new ChromePromise();
 const store = {};
@@ -40,8 +40,10 @@ export const load = async () => {
     set("clientId", store.clientId);
   }
 
+  // eslint-disable-next-line no-restricted-syntax
   for (const [key, value] of Object.entries(store)) {
     if (Object.keys(defaults).includes(key)) {
+      // eslint-disable-next-line no-undef
       chrome.runtime.sendMessage({
         type: "track",
         payload: {

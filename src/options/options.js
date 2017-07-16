@@ -1,4 +1,4 @@
-export const options = [
+export default [
   {
     type: "text",
     name: "labelCategories",

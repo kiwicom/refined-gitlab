@@ -1,6 +1,6 @@
 import components from "./components";
 import * as storage from "./storage";
-import { options } from "./options";
+import options from "./options";
 
 const formEl = document.querySelector("#options");
 

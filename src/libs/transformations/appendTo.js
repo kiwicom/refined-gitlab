@@ -31,7 +31,7 @@ export default () => {
   }
 
   setInterval(() => {
-    let deployLinkEl = document.getElementsByClassName("js-deploy-url")[0];
+    const deployLinkEl = document.getElementsByClassName("js-deploy-url")[0];
     if (deployLinkEl && !alreadyAppendedToDeploySection) {
       const mergedOptions = Object.assign({}, options, {
         deployLink: deployLinkEl.href,

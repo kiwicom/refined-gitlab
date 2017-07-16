@@ -1,6 +1,6 @@
 import FUNCTIONS from "./libs/FUNCTIONS";
 
-document.addEventListener("refined-gitlab", function(e) {
+document.addEventListener("refined-gitlab", e => {
   if (e.detail.fn === FUNCTIONS.SELF_ASSIGN_MR) {
     const { id, userId, group, project } = e.detail;
     $.ajax({
