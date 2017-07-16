@@ -34,5 +34,8 @@
         "content.css"
       ]
     }
-  ]
+  ],
+  "background": {
+    "scripts": ["background.js"]
+  }
 }

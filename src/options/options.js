@@ -34,4 +34,11 @@ export default [
     description: "",
     defaultValue: true,
   },
+  {
+    type: "checkbox",
+    name: "doTrack",
+    label: "Usage reports",
+    description: "Send anonymous usage reports to Google Analytics.",
+    defaultValue: true,
+  },
 ];
