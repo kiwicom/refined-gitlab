@@ -13,7 +13,7 @@ export default route => {
           "note-header-info",
           "author_link",
           "discussion-header",
-          "commit-author-link has-tooltip"
+          "commit-author-link has-tooltip",
         ];
         const a = document.getElementsByClassName(className[j]);
         if (a !== undefined) {

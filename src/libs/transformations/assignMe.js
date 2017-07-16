@@ -7,7 +7,7 @@ export default () => {
     .src.split("/")[7];
 
   if (userId !== undefined) {
-  	// TODO: Do on keystoke, not page load
+    // TODO: Do on keystoke, not page load
     setTimeout(() => {
       document.dispatchEvent(
         new CustomEvent("refined-gitlab", {
@@ -16,8 +16,8 @@ export default () => {
             id: parts[4],
             userId: userId,
             group: parts[1],
-            project: parts[2]
-          }
+            project: parts[2],
+          },
         })
       );
     }, 1000);
