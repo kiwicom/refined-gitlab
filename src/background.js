@@ -1,3 +1,3 @@
-import injectContentScripts from 'webext-dynamic-content-scripts';
+import injectContentScripts from "webext-dynamic-content-scripts";
 
 injectContentScripts();

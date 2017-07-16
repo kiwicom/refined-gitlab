@@ -40,12 +40,11 @@ storage.load().then(() => {
       break;
   }
 
-
   if (storage.get("disableLabelColors")) {
-  	document.body.classList.add("refined-gitlab--disableLabelColors")
-	}
+    document.body.classList.add("refined-gitlab--disableLabelColors");
+  }
 
-	if (storage.get("hideRepoAvatars")) {
-		document.body.classList.add("refined-gitlab--hideRepoAvatars")
-	}
+  if (storage.get("hideRepoAvatars")) {
+    document.body.classList.add("refined-gitlab--hideRepoAvatars");
+  }
 });

@@ -6,11 +6,11 @@ document.addEventListener("refined-gitlab", function(e) {
     $.ajax({
       type: "PUT",
       headers: {
-        "X-CSRF-Token": $.rails.csrfToken()
+        "X-CSRF-Token": $.rails.csrfToken(),
       },
       url: `/${group}/${project}/issues/${id}.json?basic=true`,
       contentType: "application/x-www-form-urlencoded",
-      data: `issue%5Bassignee_ids%5D%5B%5D=${userId}`
+      data: `issue%5Bassignee_ids%5D%5B%5D=${userId}`,
     });
   }
 });

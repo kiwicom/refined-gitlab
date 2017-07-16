@@ -14,7 +14,7 @@ export const get = key => store[key];
 
 export const set = async (key, value) => {
   const data = {
-    [key]: value
+    [key]: value,
   };
 
   try {
@@ -47,8 +47,8 @@ export const load = async () => {
         payload: {
           category: "options",
           action: key,
-          label: value.toString()
-        }
+          label: value.toString(),
+        },
       });
     }
   }
