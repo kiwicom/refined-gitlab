@@ -1,3 +1,5 @@
+/* eslint-disable consistent-return */
+
 import checkbox from "./checkbox";
 import input from "./input";
 

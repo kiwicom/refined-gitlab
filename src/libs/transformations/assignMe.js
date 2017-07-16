@@ -14,7 +14,7 @@ export default () => {
           detail: {
             fn: FUNCTIONS.SELF_ASSIGN_MR,
             id: parts[4],
-            userId: userId,
+            userId,
             group: parts[1],
             project: parts[2],
           },

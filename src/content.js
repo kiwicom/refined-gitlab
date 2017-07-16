@@ -1,3 +1,5 @@
+/* eslint-disable no-unused-vars */
+
 import ROUTES from "./libs/ROUTES";
 import * as storage from "./options/storage";
 
@@ -14,12 +16,12 @@ import showUsername from "./libs/transformations/showUsername";
 import assignMe from "./libs/transformations/assignMe";
 
 const s = document.createElement("script");
-s.src = chrome.runtime.getURL("agent.js");
+s.src = chrome.runtime.getURL("agent.js"); // eslint-disable-line no-undef
 (document.head || document.documentElement).appendChild(s);
 
 storage.load().then(() => {
   const route = pathnameToRoute(location.pathname);
-  switch (route) {
+  switch (route) { // eslint-disable-line default-case
     case ROUTES.MR:
     case ROUTES.ISSUE:
       // Enable when it will work properly
