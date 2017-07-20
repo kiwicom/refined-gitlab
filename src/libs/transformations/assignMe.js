@@ -13,7 +13,7 @@ export default () => {
         new CustomEvent("refined-gitlab", {
           detail: {
             fn: FUNCTIONS.SELF_ASSIGN_MR,
-            id: parts[4],
+            issueId: parts[4],
             userId,
             group: parts[1],
             project: parts[2],

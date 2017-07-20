@@ -14,6 +14,8 @@ import alignLabels from "./libs/transformations/alignLabels";
 import appendTo from "./libs/transformations/appendTo";
 import showUsername from "./libs/transformations/showUsername";
 import assignMe from "./libs/transformations/assignMe";
+import bindLabelsKeyboardShortcuts
+  from "./libs/transformations/bindLabelsKeyboardShortcuts";
 
 const s = document.createElement("script");
 s.src = chrome.runtime.getURL("agent.js"); // eslint-disable-line no-undef
@@ -32,6 +34,7 @@ storage.load().then(() => {
       expandSidePanel();
       divideLabels();
       appendTo();
+      bindLabelsKeyboardShortcuts();
       break;
     case ROUTES.MRS:
     case ROUTES.ISSUES:
