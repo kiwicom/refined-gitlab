@@ -5,9 +5,19 @@ import getUsername from "./libs/helpers/getUsername";
 import optimisticUpdate from "./libs/helpers/optimisticUpdate";
 import noAssigneeButton from "./libs/helpers/noAssigneeButton";
 
+function addOrRemove(array, value) {
+  const index = array.indexOf(value);
+  if (index === -1) {
+    array.push(value);
+  } else {
+    array.splice(index, 1);
+  }
+  return array;
+}
+
 document.addEventListener("refined-gitlab", e => {
   if (e.detail.fn === FUNCTIONS.SELF_ASSIGN_MR || e.detail.fn === FUNCTIONS.SELF_UNASSIGN_MR) {
-    const { id, group, project } = e.detail;
+    const { issueId, group, project } = e.detail;
     let { userId } = e.detail;
     if (e.detail.fn === FUNCTIONS.SELF_UNASSIGN_MR) {
       userId = 0;
@@ -15,11 +25,61 @@ document.addEventListener("refined-gitlab", e => {
     $.ajax({
       type: "PUT",
       headers: {
-        "X-CSRF-Token": $.rails.csrfToken(), // eslint-disable-line no-undef
+        "X-CSRF-Token": $.rails.csrfToken(),
       },
-      url: `/${group}/${project}/issues/${id}.json?basic=true`,
+      url: `/${group}/${project}/issues/${issueId}.json?basic=true`,
       contentType: "application/x-www-form-urlencoded",
       data: `issue%5Bassignee_ids%5D%5B%5D=${userId}`,
+    });
+  }
+
+  if (e.detail.fn === FUNCTIONS.bindLabelsKeyboardShortcuts) {
+    const { mapping } = e.detail;
+
+    window.Mousetrap.bind(["1", "2", "3", "4", "5", "6", "7", "8", "9"], ev => {
+      const key = ev.key;
+      const number = Number(key);
+      const label = mapping[number];
+
+      if (label) {
+        const parts = location.pathname.split("/");
+        const group = parts[1];
+        const project = parts[2];
+        const issueId = parts[4];
+
+        $.ajax({
+          type: "GET",
+          headers: {
+            "X-CSRF-Token": $.rails.csrfToken(),
+          },
+          url: `/${group}/${project}/issues/${issueId}.json?basic=true`,
+          success: res => {
+            const labelsAlready = res.labels.map(x => x.id);
+            const labelsNew = addOrRemove(labelsAlready, label);
+            const labelsString = labelsNew
+              .map(x => `issue%5Blabel_ids%5D%5B%5D=${x}`)
+              .join("&");
+
+            $.ajax({
+              type: "PUT",
+              headers: {
+                "X-CSRF-Token": $.rails.csrfToken(),
+              },
+              url: `/${group}/${project}/issues/${issueId}.json?basic=true`,
+              contentType: "application/x-www-form-urlencoded",
+              data: labelsString,
+              success: () => {
+                window.location.reload();
+              },
+            });
+          },
+        });
+      } else {
+        // eslint-disable-next-line no-alert
+        window.alert(
+          `No shortcut label set in slot ${number}, set it in extension settings`
+        );
+      }
     });
   }
 });
@@ -29,38 +89,38 @@ document.addEventListener("assign_me_to_issue_or_mr", e => {
   const pathname = parts.split("/");
   let userId = window.gon.current_user_id; // eslint-disable-line no-undef
   let fn = FUNCTIONS.SELF_ASSIGN_MR;
-  let id = 0;
+  let issueId = 0;
   let assigned = false;
   if (userId !== undefined) {
     if (pathnameToRoute(parts) === ROUTES.ISSUES || pathnameToRoute(parts) === ROUTES.MRS) {
       const { x, y } = e.detail;
       const el = document.elementFromPoint(x, y);
       if (el.classList.contains('issue-info-container')) {
-        id = el.children[0].children[1].children[0].innerText.slice(1, el.children[0].children[1].children[0].innerText.length - 1);
+        issueId = el.children[0].children[1].children[0].innerText.slice(1, el.children[0].children[1].children[0].innerText.length - 1);
       } else if (el.classList.contains('issue-main-info')) {
-        id = el.children[1].children[0].innerText.slice(1, el.children[1].children[0].innerText.length - 1);
+        issueId = el.children[1].children[0].innerText.slice(1, el.children[1].children[0].innerText.length - 1);
       } else if (el.classList.contains('issue-title')) {
-        id = el.parentElement.children[1].children[0].innerText.slice(1, el.parentElement.children[1].children[0].innerText.length - 1);
+        issueId = el.parentElement.children[1].children[0].innerText.slice(1, el.parentElement.children[1].children[0].innerText.length - 1);
       } else if (el.classList.contains('issuable-info')){
-        id = el.children[0].innerText.slice(1, el.children[0].innerText.length - 1);
+        issueId = el.children[0].innerText.slice(1, el.children[0].innerText.length - 1);
       } else if (el.classList.contains('issuable-authored')){
-        id = el.parentElement.children[0].innerText.slice(1, el.parentElement.children[0].innerText.length - 1);
+        issueId = el.parentElement.children[0].innerText.slice(1, el.parentElement.children[0].innerText.length - 1);
       } else if (el.classList.contains('author')){
-        id = el.parentElement.parentElement.parentElement.children[0].innerText.slice(1, el.parentElement.parentElement.parentElement.children[0].innerText.length - 1);
+        issueId = el.parentElement.parentElement.parentElement.children[0].innerText.slice(1, el.parentElement.parentElement.parentElement.children[0].innerText.length - 1);
       } else if (el.classList.contains('issuable-meta')){
-        id = el.parentElement.children[0].children[1].children[0].innerText.slice(1, el.parentElement.children[0].children[1].children[0].innerText.length - 1);
+        issueId = el.parentElement.children[0].children[1].children[0].innerText.slice(1, el.parentElement.children[0].children[1].children[0].innerText.length - 1);
       } else if (el.classList.contains('controls')){
-        id = el.parentElement.parentElement.children[0].children[1].children[0].innerText.slice(1, el.parentElement.parentElement.children[0].children[1].children[0].innerText.length - 1);
+        issueId = el.parentElement.parentElement.children[0].children[1].children[0].innerText.slice(1, el.parentElement.parentElement.children[0].children[1].children[0].innerText.length - 1);
       } else if (el.classList.contains('avatar-inline')){
-        id = el.parentElement.parentElement.parentElement.parentElement.parentElement.children[0].children[1].children[0].innerText.slice(1, el.parentElement.parentElement.parentElement.parentElement.parentElement.children[0].children[1].children[0].innerText.length - 1);
+        issueId = el.parentElement.parentElement.parentElement.parentElement.parentElement.children[0].children[1].children[0].innerText.slice(1, el.parentElement.parentElement.parentElement.parentElement.parentElement.children[0].children[1].children[0].innerText.length - 1);
       } else if (el.classList.contains('issuable-comments')){
-        id = el.parentElement.parentElement.parentElement.children[0].children[1].children[0].innerText.slice(1, el.parentElement.parentElement.parentElement.children[0].children[1].children[0].innerText.length - 1);
+        issueId = el.parentElement.parentElement.parentElement.children[0].children[1].children[0].innerText.slice(1, el.parentElement.parentElement.parentElement.children[0].children[1].children[0].innerText.length - 1);
       } else if (el.classList.contains('issuable-updated-at')){
-        id = el.parentElement.parentElement.children[0].children[1].children[0].innerText.slice(1, el.parentElement.parentElement.children[0].children[1].children[0].innerText.length - 1);
+        issueId = el.parentElement.parentElement.children[0].children[1].children[0].innerText.slice(1, el.parentElement.parentElement.children[0].children[1].children[0].innerText.length - 1);
       } else if (el.classList.contains('labels')){
-        id = el.parentElement.children[0].children[1].children[0].innerText.slice(1, el.parentElement.children[0].children[1].children[0].innerText.length - 1);
+        issueId = el.parentElement.children[0].children[1].children[0].innerText.slice(1, el.parentElement.children[0].children[1].children[0].innerText.length - 1);
       } else if (el.classList.contains('labels-module')){
-        id = el.parentElement.parentElement.children[0].children[1].children[0].innerText.slice(1, el.parentElement.parentElement.children[0].children[1].children[0].innerText.length - 1);
+        issueId = el.parentElement.parentElement.children[0].children[1].children[0].innerText.slice(1, el.parentElement.parentElement.children[0].children[1].children[0].innerText.length - 1);
       }
       const assignees = document.getElementsByClassName('author_link has-tooltip');
       for (let i = 0; i < assignees.length; i++) {
@@ -85,7 +145,7 @@ document.addEventListener("assign_me_to_issue_or_mr", e => {
       if (assigned) {
         noAssigneeButton();
       }
-      id = pathname[4];
+      issueId = pathname[4];
     }
     if (assigned) {
       fn = FUNCTIONS.SELF_UNASSIGN_MR;
@@ -101,7 +161,7 @@ document.addEventListener("assign_me_to_issue_or_mr", e => {
     document.dispatchEvent(new CustomEvent("refined-gitlab", {
       detail: {
         fn,
-        id,
+        issueId,
         userId,
         group: pathname[1],
         project: pathname[2],

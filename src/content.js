@@ -13,6 +13,8 @@ import filterItems from "./libs/transformations/filterItems";
 import alignLabels from "./libs/transformations/alignLabels";
 import appendTo from "./libs/transformations/appendTo";
 import showUsername from "./libs/transformations/showUsername";
+import bindLabelsKeyboardShortcuts
+  from "./libs/transformations/bindLabelsKeyboardShortcuts";
 import assignMeTo from "./libs/transformations/assignMeTo";
 
 const s = document.createElement("script");
@@ -32,6 +34,7 @@ storage.load().then(() => {
       expandSidePanel();
       divideLabels();
       appendTo();
+      bindLabelsKeyboardShortcuts();
       break;
     case ROUTES.MRS:
     case ROUTES.ISSUES:
