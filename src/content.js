@@ -13,7 +13,7 @@ import filterItems from "./libs/transformations/filterItems";
 import alignLabels from "./libs/transformations/alignLabels";
 import appendTo from "./libs/transformations/appendTo";
 import showUsername from "./libs/transformations/showUsername";
-import assignMe from "./libs/transformations/assignMe";
+import assignMeTo from "./libs/transformations/assignMeTo";
 
 const s = document.createElement("script");
 s.src = chrome.runtime.getURL("agent.js"); // eslint-disable-line no-undef
@@ -25,7 +25,7 @@ storage.load().then(() => {
     case ROUTES.MR:
     case ROUTES.ISSUE:
       // Enable when it will work properly
-      // assignMe();
+      assignMeTo();
       // showUsername(route);
       expandAll();
       rotateDiscussion("notes-list");
@@ -37,6 +37,7 @@ storage.load().then(() => {
     case ROUTES.ISSUES:
       filterItems("filtered-search-box");
       alignLabels(route);
+      assignMeTo();
       // Enable when it will work properly
       // showUsername(route);
       break;
