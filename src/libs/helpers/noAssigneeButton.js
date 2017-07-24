@@ -3,11 +3,11 @@ export default () => {
   el.children[0].remove();
   const button = document.createElement("button");
   button.setAttribute("type", "button");
-  button.classList.add('btn-link');
-  button.innerText = 'assign yourself';
+  button.classList.add("btn-link");
+  button.innerText = "assign yourself";
   const span = document.createElement("span");
-  span.className = 'assign-yourself no-value';
-  span.innerText = 'No assignee - ';
+  span.className = "assign-yourself no-value";
+  span.innerText = "No assignee - ";
   span.appendChild(button);
   el.appendChild(span);
-}
+};

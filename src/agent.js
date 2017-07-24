@@ -16,7 +16,10 @@ function addOrRemove(array, value) {
 }
 
 document.addEventListener("refined-gitlab", e => {
-  if (e.detail.fn === FUNCTIONS.SELF_ASSIGN_MR || e.detail.fn === FUNCTIONS.SELF_UNASSIGN_MR) {
+  if (
+    e.detail.fn === FUNCTIONS.SELF_ASSIGN_MR ||
+    e.detail.fn === FUNCTIONS.SELF_UNASSIGN_MR
+  ) {
     const { issueId, group, project } = e.detail;
     let { userId } = e.detail;
     if (e.detail.fn === FUNCTIONS.SELF_UNASSIGN_MR) {
@@ -87,42 +90,96 @@ document.addEventListener("refined-gitlab", e => {
 document.addEventListener("assign_me_to_issue_or_mr", e => {
   const { parts } = e.detail;
   const pathname = parts.split("/");
-  let userId = window.gon.current_user_id; // eslint-disable-line no-undef
+  const userId = window.gon.current_user_id; // eslint-disable-line no-undef
   let fn = FUNCTIONS.SELF_ASSIGN_MR;
   let issueId = 0;
   let assigned = false;
   if (userId !== undefined) {
-    if (pathnameToRoute(parts) === ROUTES.ISSUES || pathnameToRoute(parts) === ROUTES.MRS) {
+    if (
+      pathnameToRoute(parts) === ROUTES.ISSUES ||
+      pathnameToRoute(parts) === ROUTES.MRS
+    ) {
       const { x, y } = e.detail;
       const el = document.elementFromPoint(x, y);
-      if (el.classList.contains('issue-info-container')) {
-        issueId = el.children[0].children[1].children[0].innerText.slice(1, el.children[0].children[1].children[0].innerText.length - 1);
-      } else if (el.classList.contains('issue-main-info')) {
-        issueId = el.children[1].children[0].innerText.slice(1, el.children[1].children[0].innerText.length - 1);
-      } else if (el.classList.contains('issue-title')) {
-        issueId = el.parentElement.children[1].children[0].innerText.slice(1, el.parentElement.children[1].children[0].innerText.length - 1);
-      } else if (el.classList.contains('issuable-info')){
-        issueId = el.children[0].innerText.slice(1, el.children[0].innerText.length - 1);
-      } else if (el.classList.contains('issuable-authored')){
-        issueId = el.parentElement.children[0].innerText.slice(1, el.parentElement.children[0].innerText.length - 1);
-      } else if (el.classList.contains('author')){
-        issueId = el.parentElement.parentElement.parentElement.children[0].innerText.slice(1, el.parentElement.parentElement.parentElement.children[0].innerText.length - 1);
-      } else if (el.classList.contains('issuable-meta')){
-        issueId = el.parentElement.children[0].children[1].children[0].innerText.slice(1, el.parentElement.children[0].children[1].children[0].innerText.length - 1);
-      } else if (el.classList.contains('controls')){
-        issueId = el.parentElement.parentElement.children[0].children[1].children[0].innerText.slice(1, el.parentElement.parentElement.children[0].children[1].children[0].innerText.length - 1);
-      } else if (el.classList.contains('avatar-inline')){
-        issueId = el.parentElement.parentElement.parentElement.parentElement.parentElement.children[0].children[1].children[0].innerText.slice(1, el.parentElement.parentElement.parentElement.parentElement.parentElement.children[0].children[1].children[0].innerText.length - 1);
-      } else if (el.classList.contains('issuable-comments')){
-        issueId = el.parentElement.parentElement.parentElement.children[0].children[1].children[0].innerText.slice(1, el.parentElement.parentElement.parentElement.children[0].children[1].children[0].innerText.length - 1);
-      } else if (el.classList.contains('issuable-updated-at')){
-        issueId = el.parentElement.parentElement.children[0].children[1].children[0].innerText.slice(1, el.parentElement.parentElement.children[0].children[1].children[0].innerText.length - 1);
-      } else if (el.classList.contains('labels')){
-        issueId = el.parentElement.children[0].children[1].children[0].innerText.slice(1, el.parentElement.children[0].children[1].children[0].innerText.length - 1);
-      } else if (el.classList.contains('labels-module')){
-        issueId = el.parentElement.parentElement.children[0].children[1].children[0].innerText.slice(1, el.parentElement.parentElement.children[0].children[1].children[0].innerText.length - 1);
+      if (el.classList.contains("issue-info-container")) {
+        issueId = el.children[0].children[1].children[0].innerText.slice(
+          1,
+          el.children[0].children[1].children[0].innerText.length - 1
+        );
+      } else if (el.classList.contains("issue-main-info")) {
+        issueId = el.children[1].children[0].innerText.slice(
+          1,
+          el.children[1].children[0].innerText.length - 1
+        );
+      } else if (el.classList.contains("issue-title")) {
+        issueId = el.parentElement.children[1].children[0].innerText.slice(
+          1,
+          el.parentElement.children[1].children[0].innerText.length - 1
+        );
+      } else if (el.classList.contains("issuable-info")) {
+        issueId = el.children[0].innerText.slice(
+          1,
+          el.children[0].innerText.length - 1
+        );
+      } else if (el.classList.contains("issuable-authored")) {
+        issueId = el.parentElement.children[0].innerText.slice(
+          1,
+          el.parentElement.children[0].innerText.length - 1
+        );
+      } else if (el.classList.contains("author")) {
+        issueId = el.parentElement.parentElement.parentElement.children[0].innerText.slice(
+          1,
+          el.parentElement.parentElement.parentElement.children[0].innerText
+            .length - 1
+        );
+      } else if (el.classList.contains("issuable-meta")) {
+        issueId = el.parentElement.children[0].children[1].children[0].innerText.slice(
+          1,
+          el.parentElement.children[0].children[1].children[0].innerText
+            .length - 1
+        );
+      } else if (el.classList.contains("controls")) {
+        issueId = el.parentElement.parentElement.children[0].children[1].children[0].innerText.slice(
+          1,
+          el.parentElement.parentElement.children[0].children[1].children[0]
+            .innerText.length - 1
+        );
+      } else if (el.classList.contains("avatar-inline")) {
+        issueId = el.parentElement.parentElement.parentElement.parentElement.parentElement.children[0].children[1].children[0].innerText.slice(
+          1,
+          el.parentElement.parentElement.parentElement.parentElement
+            .parentElement.children[0].children[1].children[0].innerText
+            .length - 1
+        );
+      } else if (el.classList.contains("issuable-comments")) {
+        issueId = el.parentElement.parentElement.parentElement.children[0].children[1].children[0].innerText.slice(
+          1,
+          el.parentElement.parentElement.parentElement.children[0].children[1]
+            .children[0].innerText.length - 1
+        );
+      } else if (el.classList.contains("issuable-updated-at")) {
+        issueId = el.parentElement.parentElement.children[0].children[1].children[0].innerText.slice(
+          1,
+          el.parentElement.parentElement.children[0].children[1].children[0]
+            .innerText.length - 1
+        );
+      } else if (el.classList.contains("labels")) {
+        issueId = el.parentElement.children[0].children[1].children[0].innerText.slice(
+          1,
+          el.parentElement.children[0].children[1].children[0].innerText
+            .length - 1
+        );
+      } else if (el.classList.contains("labels-module")) {
+        issueId = el.parentElement.parentElement.children[0].children[1].children[0].innerText.slice(
+          1,
+          el.parentElement.parentElement.children[0].children[1].children[0]
+            .innerText.length - 1
+        );
       }
-      const assignees = document.getElementsByClassName('author_link has-tooltip');
+      const assignees = document.getElementsByClassName(
+        "author_link has-tooltip"
+      );
+      // eslint-disable-next-line no-plusplus
       for (let i = 0; i < assignees.length; i++) {
         if (getUsername(assignees[i]) === window.gon.current_username) {
           assigned = true;
@@ -132,14 +189,22 @@ document.addEventListener("assign_me_to_issue_or_mr", e => {
       }
     } else {
       const assignees = document.getElementsByClassName("user-item");
+      // eslint-disable-next-line no-plusplus
       for (let i = 0; i < assignees.length; i++) {
-        if (getUsername(assignees[i].children[0]) === window.gon.current_username) {
+        if (
+          getUsername(assignees[i].children[0]) === window.gon.current_username
+        ) {
           assigned = true;
           break;
         }
       }
-      if (document.getElementsByClassName('author_link bold').length !== 0 && !assigned &&
-      document.getElementsByClassName('author_link bold')[0].children[1].innerText === window.gon.current_user_fullname) { // eslint-disable-line no-undef
+      if (
+        document.getElementsByClassName("author_link bold").length !== 0 &&
+        !assigned &&
+        document.getElementsByClassName("author_link bold")[0].children[1]
+          .innerText === window.gon.current_user_fullname
+      ) {
+        // eslint-disable-line no-undef
         assigned = true;
       }
       if (assigned) {
@@ -155,17 +220,19 @@ document.addEventListener("assign_me_to_issue_or_mr", e => {
         window.gon.current_username, // eslint-disable-line no-undef
         window.gon.current_user_fullname, // eslint-disable-line no-undef
         window.gon.current_user_avatar_url, // eslint-disable-line no-undef
-        parts,
-      )
+        parts
+      );
     }
-    document.dispatchEvent(new CustomEvent("refined-gitlab", {
-      detail: {
-        fn,
-        issueId,
-        userId,
-        group: pathname[1],
-        project: pathname[2],
-      }
-    }));
+    document.dispatchEvent(
+      new CustomEvent("refined-gitlab", {
+        detail: {
+          fn,
+          issueId,
+          userId,
+          group: pathname[1],
+          project: pathname[2],
+        },
+      })
+    );
   }
 });

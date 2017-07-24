@@ -2,11 +2,14 @@ import pathnameToRoute from "./pathnameToRoute";
 import ROUTES from "../ROUTES";
 
 export default (currentUsername, fullName, avatarLink, parts) => {
-  if (pathnameToRoute(parts) === ROUTES.ISSUES || pathnameToRoute(parts) === ROUTES.MRS) {
+  if (
+    pathnameToRoute(parts) === ROUTES.ISSUES ||
+    pathnameToRoute(parts) === ROUTES.MRS
+  ) {
     const avatar = document.createElement("img");
     avatar.setAttribute("width", "16");
     avatar.setAttribute("src", `${avatarLink}`);
-    avatar.setAttribute("alt", '');
+    avatar.setAttribute("alt", "");
     avatar.className = "avatar avatar-inline s16";
     const link = document.createElement("a");
     link.className = "author_link has-tooltip";
@@ -17,7 +20,12 @@ export default (currentUsername, fullName, avatarLink, parts) => {
     link.appendChild(avatar);
     const list = document.createElement("li");
     list.appendChild(link);
-    document.getElementsByClassName("controls")[0].insertBefore(list, document.getElementsByClassName("controls")[0].children[0])
+    document
+      .getElementsByClassName("controls")[0]
+      .insertBefore(
+        list,
+        document.getElementsByClassName("controls")[0].children[0]
+      );
   } else {
     const el = document.getElementsByClassName("value hide-collapsed")[0];
     el.children[0].remove();
@@ -40,4 +48,4 @@ export default (currentUsername, fullName, avatarLink, parts) => {
     link.appendChild(username);
     el.appendChild(link);
   }
-}
+};
