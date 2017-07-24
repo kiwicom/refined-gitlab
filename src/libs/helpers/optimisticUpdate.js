@@ -1,11 +1,7 @@
-import pathnameToRoute from "./pathnameToRoute";
 import ROUTES from "../ROUTES";
 
-export default (currentUsername, fullName, avatarLink, parts) => {
-  if (
-    pathnameToRoute(parts) === ROUTES.ISSUES ||
-    pathnameToRoute(parts) === ROUTES.MRS
-  ) {
+export default (currentUsername, fullName, avatarLink, route) => {
+  if (route === ROUTES.ISSUES || route === ROUTES.MRS) {
     const avatar = document.createElement("img");
     avatar.setAttribute("width", "16");
     avatar.setAttribute("src", `${avatarLink}`);

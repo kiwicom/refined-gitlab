@@ -2,13 +2,9 @@ import pathnameToRoute from "../helpers/pathnameToRoute";
 import ROUTES from "../ROUTES";
 
 export default () => {
-  const parts = location.pathname;
-  let x = 0;
-  let y = 0;
-  if (
-    pathnameToRoute(parts) === ROUTES.ISSUES ||
-    pathnameToRoute(parts) === ROUTES.MRS
-  ) {
+  const route = pathnameToRoute(location.pathname);
+  let x, y; // eslint-disable-line one-var
+  if (route === ROUTES.ISSUES || route === ROUTES.MRS) {
     document.onmousemove = e => {
       x = e.pageX;
       y = e.pageY;
@@ -21,7 +17,7 @@ export default () => {
           detail: {
             x,
             y,
-            parts,
+            route,
           },
         })
       );
