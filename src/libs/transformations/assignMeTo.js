@@ -3,8 +3,7 @@ import ROUTES from "../ROUTES";
 
 export default () => {
   const parts = location.pathname;
-  let x = 0;
-  let y = 0;
+  let x, y; // eslint-disable-line one-var
   if (
     pathnameToRoute(parts) === ROUTES.ISSUES ||
     pathnameToRoute(parts) === ROUTES.MRS
