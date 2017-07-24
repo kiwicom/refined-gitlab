@@ -1,5 +1,4 @@
 import FUNCTIONS from "./libs/FUNCTIONS";
-import pathnameToRoute from "./libs/helpers/pathnameToRoute";
 import ROUTES from "./libs/ROUTES";
 import getUsername from "./libs/helpers/getUsername";
 import optimisticUpdate from "./libs/helpers/optimisticUpdate";
@@ -88,17 +87,14 @@ document.addEventListener("refined-gitlab", e => {
 });
 
 document.addEventListener("assign_me_to_issue_or_mr", e => {
-  const { parts } = e.detail;
-  const pathname = parts.split("/");
+  const { route } = e.detail;
+  const pathname = location.pathname;
   const userId = window.gon.current_user_id; // eslint-disable-line no-undef
   let fn = FUNCTIONS.SELF_ASSIGN_MR;
   let issueId = 0;
   let assigned = false;
   if (userId !== undefined) {
-    if (
-      pathnameToRoute(parts) === ROUTES.ISSUES ||
-      pathnameToRoute(parts) === ROUTES.MRS
-    ) {
+    if (route === ROUTES.ISSUES || route === ROUTES.MRS) {
       const { x, y } = e.detail;
       const el = document.elementFromPoint(x, y);
       if (el.classList.contains("issue-info-container")) {
@@ -220,7 +216,7 @@ document.addEventListener("assign_me_to_issue_or_mr", e => {
         window.gon.current_username, // eslint-disable-line no-undef
         window.gon.current_user_fullname, // eslint-disable-line no-undef
         window.gon.current_user_avatar_url, // eslint-disable-line no-undef
-        parts
+        route
       );
     }
     document.dispatchEvent(
