@@ -12,6 +12,7 @@ import alignLabels from "./libs/transformations/alignLabels";
 import appendTo from "./libs/transformations/appendTo";
 import showUsername from "./libs/transformations/showUsername";
 import assignMe from "./libs/transformations/assignMe";
+import discussionOverComment from "./libs/transformations/discussionOverComment";
 
 const s = document.createElement("script");
 s.src = chrome.runtime.getURL("agent.js");
@@ -30,6 +31,7 @@ storage.load().then(() => {
       expandSidePanel();
       divideLabels();
       appendTo();
+      discussionOverComment();
       break;
     case ROUTES.MRS:
     case ROUTES.ISSUES:
