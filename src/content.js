@@ -1,3 +1,5 @@
+/* eslint-disable no-unused-vars */
+
 import ROUTES from "./libs/ROUTES";
 import * as storage from "./options/storage";
 
@@ -12,15 +14,17 @@ import alignLabels from "./libs/transformations/alignLabels";
 import appendTo from "./libs/transformations/appendTo";
 import showUsername from "./libs/transformations/showUsername";
 import assignMe from "./libs/transformations/assignMe";
+import bindLabelsKeyboardShortcuts
+  from "./libs/transformations/bindLabelsKeyboardShortcuts";
 import discussionOverComment from "./libs/transformations/discussionOverComment";
 
 const s = document.createElement("script");
-s.src = chrome.runtime.getURL("agent.js");
+s.src = chrome.runtime.getURL("agent.js"); // eslint-disable-line no-undef
 (document.head || document.documentElement).appendChild(s);
 
 storage.load().then(() => {
   const route = pathnameToRoute(location.pathname);
-  switch (route) {
+  switch (route) { // eslint-disable-line default-case
     case ROUTES.MR:
     case ROUTES.ISSUE:
       // Enable when it will work properly
@@ -31,6 +35,7 @@ storage.load().then(() => {
       expandSidePanel();
       divideLabels();
       appendTo();
+      bindLabelsKeyboardShortcuts();
       discussionOverComment();
       break;
     case ROUTES.MRS:
@@ -42,12 +47,11 @@ storage.load().then(() => {
       break;
   }
 
-
   if (storage.get("disableLabelColors")) {
-  	document.body.classList.add("refined-gitlab--disableLabelColors")
-	}
+    document.body.classList.add("refined-gitlab--disableLabelColors");
+  }
 
-	if (storage.get("hideRepoAvatars")) {
-		document.body.classList.add("refined-gitlab--hideRepoAvatars")
-	}
+  if (storage.get("hideRepoAvatars")) {
+    document.body.classList.add("refined-gitlab--hideRepoAvatars");
+  }
 });

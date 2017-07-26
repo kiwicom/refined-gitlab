@@ -10,6 +10,7 @@ https://chrome.google.com/webstore/detail/pogpjdbfdfnmlegpbhdmlebognmbamko
 * `Q` keyboard shortcut to filter own issues/merge requests
 * Disable label colors `configurable`
 * Hide repo avatars `configurable`
+* Keyboard shortcuts to toggle labels `configurable`
 
 ## Future features
 * [ ] Show usernames instead of real names

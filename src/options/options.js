@@ -1,37 +1,98 @@
-export const options = [
+export default [
   {
     type: "text",
     name: "labelCategories",
     label: "Label categories",
     description: "",
-    defaultValue: "module,type,prio,process,qa,design,testing,waiting,weight,no-module"
+    defaultValue: "module,type,prio,process,qa,design,testing,waiting,weight,no-module",
   },
-	{
-		type: "text",
-		name: "appendToDeploySection",
-		label: "Append to deploy section",
-		description: "",
-		defaultValue: "<a href='https://skymock.skypicker.com?baseUrl=<%= deployLink %>cs' target='_blank'>Skymock</a>"
-	},
-	{
-		type: "text",
-		name: "appendToPipelineSection",
-		label: "Append to pipeline section",
-		description: "",
-		defaultValue: "<a href='registry.skypicker.com:5005/<%= group %>/<%= project %>:<%= hash %>' target='_blank'>Registry</a>"
-	},
-	{
-		type: "checkbox",
-		name: "disableLabelColors",
-		label: "Disable label colors",
-		description: "",
-		defaultValue: false
-	},
-	{
-		type: "checkbox",
-		name: "hideRepoAvatars",
-		label: "Hide repo avatars",
-		description: "",
-		defaultValue: true
-	},
+  {
+    type: "text",
+    name: "labelShortcut1",
+    label: "Label toggle shortcut #1",
+    defaultValue: "",
+  },
+  {
+    type: "text",
+    name: "labelShortcut2",
+    label: "Label toggle shortcut #2",
+    defaultValue: "",
+  },
+  {
+    type: "text",
+    name: "labelShortcut3",
+    label: "Label toggle shortcut #3",
+    defaultValue: "",
+  },
+  {
+    type: "text",
+    name: "labelShortcut4",
+    label: "Label toggle shortcut #4",
+    defaultValue: "",
+  },
+  {
+    type: "text",
+    name: "labelShortcut5",
+    label: "Label toggle shortcut #5",
+    defaultValue: "",
+  },
+  {
+    type: "text",
+    name: "labelShortcut6",
+    label: "Label toggle shortcut #6",
+    defaultValue: "",
+  },
+  {
+    type: "text",
+    name: "labelShortcut7",
+    label: "Label toggle shortcut #7",
+    defaultValue: "",
+  },
+  {
+    type: "text",
+    name: "labelShortcut8",
+    label: "Label toggle shortcut #8",
+    defaultValue: "",
+  },
+  {
+    type: "text",
+    name: "labelShortcut9",
+    label: "Label toggle shortcut #9",
+    defaultValue: "",
+  },
+  {
+    type: "text",
+    name: "appendToDeploySection",
+    label: "Append to deploy section",
+    description: "",
+    defaultValue: "<a href='https://skymock.skypicker.com?baseUrl=<%= deployLink %>cs' target='_blank'>Skymock</a>",
+  },
+  {
+    type: "text",
+    name: "appendToPipelineSection",
+    label: "Append to pipeline section",
+    description: "",
+    defaultValue: "<a href='registry.skypicker.com:5005/<%= group %>/<%= project %>:<%= hash %>' target='_blank'>Registry</a>",
+  },
+  {
+    type: "checkbox",
+    name: "disableLabelColors",
+    label: "Disable label colors",
+    description: "",
+    defaultValue: false,
+  },
+  {
+    type: "checkbox",
+    name: "hideRepoAvatars",
+    label: "Hide repo avatars",
+    description: "",
+    defaultValue: true,
+  },
+  {
+    type: "checkbox",
+    name: "doTrack",
+    label: "Usage reports",
+    description: "Send anonymous usage reports to Google Analytics.",
+    defaultValue: true,
+  },
 ];

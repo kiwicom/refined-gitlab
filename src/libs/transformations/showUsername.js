@@ -1,3 +1,5 @@
+/* eslint-disable no-continue,default-case */
+
 import ROUTES from "../ROUTES";
 import getUsername from "../helpers/getUsername";
 
@@ -5,6 +7,7 @@ export default route => {
   switch (route) {
     case ROUTES.MR:
     case ROUTES.ISSUE:
+      // eslint-disable-next-line no-plusplus
       for (let j = 0; j < 7; j++) {
         const className = [
           "author has-tooltip",
@@ -13,10 +16,11 @@ export default route => {
           "note-header-info",
           "author_link",
           "discussion-header",
-          "commit-author-link has-tooltip"
+          "commit-author-link has-tooltip",
         ];
         const a = document.getElementsByClassName(className[j]);
         if (a !== undefined) {
+          // eslint-disable-next-line no-plusplus
           for (let i = 0; i < a.length; i++) {
             let username;
             if (j === 2 || j === 4 || j === 6) username = getUsername(a[i]);
@@ -49,13 +53,15 @@ export default route => {
                 continue;
               case 5:
                 a[i].children[2].innerText = a[i].children[2].innerText.replace(
-                  "@" + getUsername(a[i].children[1]),
+                  `@${getUsername(a[i].children[1])}`,
                   ""
                 );
                 continue;
               case 6:
                 // Commits
+                // eslint-disable-next-line no-shadow
                 setTimeout((a, i) => {
+                  // eslint-disable-next-line no-param-reassign
                   a[i].innerText = username;
                 }, 1000);
             }
@@ -64,17 +70,20 @@ export default route => {
       }
       break;
     case ROUTES.MRS:
-    case ROUTES.ISSUES:
+    case ROUTES.ISSUES: {
       let a = document.getElementsByClassName("author_link");
       a = [].slice.call(a);
+      // eslint-disable-next-line array-callback-return
       a.map(element => {
         const username = getUsername(element);
         if (element.classList.contains("has-tooltip")) {
-          element.setAttribute("title", "Assigned to " + username);
+          element.setAttribute("title", `Assigned to ${username}`);
         } else {
+          // eslint-disable-next-line no-param-reassign
           element.children[0].innerText = username;
         }
       });
       break;
+    }
   }
 };

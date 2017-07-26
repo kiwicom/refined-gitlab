@@ -14,7 +14,7 @@ export default () => {
 
   const options = {
     group: location.pathname.split("/")[1], // FIXME: Nicer
-    project: location.pathname.split("/")[2] // FIXME: Nicer
+    project: location.pathname.split("/")[2], // FIXME: Nicer
   };
 
   try {
@@ -31,10 +31,10 @@ export default () => {
   }
 
   setInterval(() => {
-    let deployLinkEl = document.getElementsByClassName("js-deploy-url")[0];
+    const deployLinkEl = document.getElementsByClassName("js-deploy-url")[0];
     if (deployLinkEl && !alreadyAppendedToDeploySection) {
       const mergedOptions = Object.assign({}, options, {
-        deployLink: deployLinkEl.href
+        deployLink: deployLinkEl.href,
       });
       deployLinkEl.insertAdjacentHTML(
         "afterend",
