@@ -11,6 +11,7 @@ https://chrome.google.com/webstore/detail/pogpjdbfdfnmlegpbhdmlebognmbamko
 * Disable label colors `configurable`
 * Hide repo avatars `configurable`
 * Keyboard shortcuts to toggle labels `configurable`
+* Prefer Discussions over Comments
 
 ## Future features
 * [ ] Show usernames instead of real names

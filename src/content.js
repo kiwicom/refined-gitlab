@@ -15,6 +15,7 @@ import appendTo from "./libs/transformations/appendTo";
 import showUsername from "./libs/transformations/showUsername";
 import assignMe from "./libs/transformations/assignMe";
 import bindLabelsKeyboardShortcuts from "./libs/transformations/bindLabelsKeyboardShortcuts";
+import discussionOverComment from "./libs/transformations/discussionOverComment";
 
 const s = document.createElement("script");
 s.src = chrome.runtime.getURL("agent.js"); // eslint-disable-line no-undef
@@ -34,6 +35,7 @@ storage.load().then(() => {
       divideLabels();
       appendTo();
       bindLabelsKeyboardShortcuts();
+      discussionOverComment();
       break;
     case ROUTES.MRS:
     case ROUTES.ISSUES:
