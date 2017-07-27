@@ -14,8 +14,7 @@ import alignLabels from "./libs/transformations/alignLabels";
 import appendTo from "./libs/transformations/appendTo";
 import showUsername from "./libs/transformations/showUsername";
 import assignMe from "./libs/transformations/assignMe";
-import bindLabelsKeyboardShortcuts
-  from "./libs/transformations/bindLabelsKeyboardShortcuts";
+import bindLabelsKeyboardShortcuts from "./libs/transformations/bindLabelsKeyboardShortcuts";
 
 const s = document.createElement("script");
 s.src = chrome.runtime.getURL("agent.js"); // eslint-disable-line no-undef
@@ -28,7 +27,7 @@ storage.load().then(() => {
     case ROUTES.ISSUE:
       // Enable when it will work properly
       // assignMe();
-      // showUsername(route);
+      showUsername(route);
       expandAll();
       rotateDiscussion("notes-list");
       expandSidePanel();
@@ -40,8 +39,7 @@ storage.load().then(() => {
     case ROUTES.ISSUES:
       filterItems("filtered-search-box");
       alignLabels(route);
-      // Enable when it will work properly
-      // showUsername(route);
+      showUsername(route);
       break;
   }
 
