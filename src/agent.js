@@ -3,6 +3,7 @@ import ROUTES from "./libs/ROUTES";
 import getUsername from "./libs/helpers/getUsername";
 import optimisticUpdate from "./libs/helpers/optimisticUpdate";
 import noAssigneeButton from "./libs/helpers/noAssigneeButton";
+import pathnameToRoute from "./libs/helpers/pathnameToRoute";
 
 function addOrRemove(array, value) {
   const index = array.indexOf(value);
@@ -84,14 +85,39 @@ document.addEventListener("refined-gitlab", e => {
       }
     });
   }
+
+  if (e.detail.fn === FUNCTIONS.bindAssignKeyboardShortcuts) {
+    const { shortcut } = e.detail;
+    const route = pathnameToRoute(window.location.pathname);
+    let x, y; // eslint-disable-line one-var
+    if (route === ROUTES.ISSUES || route === ROUTES.MRS) {
+      document.onmousemove = _e => {
+        x = _e.pageX;
+        y = _e.pageY;
+      };
+    }
+
+    // eslint-disable-next-line no-unused-vars
+    window.Mousetrap.bind(shortcut, ev => {
+      document.dispatchEvent(
+        new CustomEvent("assign_me_to_issue_or_mr", {
+          detail: {
+            x,
+            y,
+            route,
+          },
+        })
+      );
+    });
+  }
 });
 
 document.addEventListener("assign_me_to_issue_or_mr", e => {
   const { route } = e.detail;
-  const pathname = location.pathname;
+  const parts = window.location.pathname.split("/");
   const userId = window.gon.current_user_id; // eslint-disable-line no-undef
   let fn = FUNCTIONS.SELF_ASSIGN_MR;
-  let issueId = 0;
+  let issueId;
   let assigned = false;
   if (userId !== undefined) {
     if (route === ROUTES.ISSUES || route === ROUTES.MRS) {
@@ -206,7 +232,7 @@ document.addEventListener("assign_me_to_issue_or_mr", e => {
       if (assigned) {
         noAssigneeButton();
       }
-      issueId = pathname[4];
+      issueId = parts[4];
     }
     if (assigned) {
       fn = FUNCTIONS.SELF_UNASSIGN_MR;
@@ -225,8 +251,8 @@ document.addEventListener("assign_me_to_issue_or_mr", e => {
           fn,
           issueId,
           userId,
-          group: pathname[1],
-          project: pathname[2],
+          group: parts[1],
+          project: parts[2],
         },
       })
     );

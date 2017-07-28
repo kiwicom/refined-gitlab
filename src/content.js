@@ -27,8 +27,9 @@ storage.load().then(() => {
     case ROUTES.MR:
     case ROUTES.ISSUE:
       // Enable when it will work properly
-      assignMeTo();
       // showUsername(route);
+
+      assignMeTo();
       expandAll();
       rotateDiscussion("notes-list");
       expandSidePanel();
