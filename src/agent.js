@@ -2,7 +2,6 @@ import FUNCTIONS from "./libs/FUNCTIONS";
 import ROUTES from "./libs/ROUTES";
 import getUsername from "./libs/helpers/getUsername";
 import optimisticUpdate from "./libs/helpers/optimisticUpdate";
-import noAssigneeButton from "./libs/helpers/noAssigneeButton";
 import pathnameToRoute from "./libs/helpers/pathnameToRoute";
 
 function addOrRemove(array, value) {
@@ -114,108 +113,36 @@ document.addEventListener("refined-gitlab", e => {
 
 document.addEventListener("assign_me_to_issue_or_mr", e => {
   const { route } = e.detail;
-  const parts = window.location.pathname.split("/");
   const userId = window.gon.current_user_id; // eslint-disable-line no-undef
-  let fn = FUNCTIONS.SELF_ASSIGN_MR;
-  let issueId;
-  let assigned = false;
   if (userId !== undefined) {
+    let issueId, internalIssueId, assignees; // eslint-disable-line one-var
+    let assigned = false;
+    const parts = window.location.pathname.split("/");
+    const currentUsername = window.gon.current_username; // eslint-disable-line no-undef
+    const currentUserFullName = window.gon.current_user_fullname; // eslint-disable-line no-undef
+
     if (route === ROUTES.ISSUES || route === ROUTES.MRS) {
       const { x, y } = e.detail;
+
       const el = document.elementFromPoint(x, y);
-      if (el.classList.contains("issue-info-container")) {
-        issueId = el.children[0].children[1].children[0].innerText.slice(
-          1,
-          el.children[0].children[1].children[0].innerText.length - 1
-        );
-      } else if (el.classList.contains("issue-main-info")) {
-        issueId = el.children[1].children[0].innerText.slice(
-          1,
-          el.children[1].children[0].innerText.length - 1
-        );
-      } else if (el.classList.contains("issue-title")) {
-        issueId = el.parentElement.children[1].children[0].innerText.slice(
-          1,
-          el.parentElement.children[1].children[0].innerText.length - 1
-        );
-      } else if (el.classList.contains("issuable-info")) {
-        issueId = el.children[0].innerText.slice(
-          1,
-          el.children[0].innerText.length - 1
-        );
-      } else if (el.classList.contains("issuable-authored")) {
-        issueId = el.parentElement.children[0].innerText.slice(
-          1,
-          el.parentElement.children[0].innerText.length - 1
-        );
-      } else if (el.classList.contains("author")) {
-        issueId = el.parentElement.parentElement.parentElement.children[0].innerText.slice(
-          1,
-          el.parentElement.parentElement.parentElement.children[0].innerText
-            .length - 1
-        );
-      } else if (el.classList.contains("issuable-meta")) {
-        issueId = el.parentElement.children[0].children[1].children[0].innerText.slice(
-          1,
-          el.parentElement.children[0].children[1].children[0].innerText
-            .length - 1
-        );
-      } else if (el.classList.contains("controls")) {
-        issueId = el.parentElement.parentElement.children[0].children[1].children[0].innerText.slice(
-          1,
-          el.parentElement.parentElement.children[0].children[1].children[0]
-            .innerText.length - 1
-        );
-      } else if (el.classList.contains("avatar-inline")) {
-        issueId = el.parentElement.parentElement.parentElement.parentElement.parentElement.children[0].children[1].children[0].innerText.slice(
-          1,
-          el.parentElement.parentElement.parentElement.parentElement
-            .parentElement.children[0].children[1].children[0].innerText
-            .length - 1
-        );
-      } else if (el.classList.contains("issuable-comments")) {
-        issueId = el.parentElement.parentElement.parentElement.children[0].children[1].children[0].innerText.slice(
-          1,
-          el.parentElement.parentElement.parentElement.children[0].children[1]
-            .children[0].innerText.length - 1
-        );
-      } else if (el.classList.contains("issuable-updated-at")) {
-        issueId = el.parentElement.parentElement.children[0].children[1].children[0].innerText.slice(
-          1,
-          el.parentElement.parentElement.children[0].children[1].children[0]
-            .innerText.length - 1
-        );
-      } else if (el.classList.contains("labels")) {
-        issueId = el.parentElement.children[0].children[1].children[0].innerText.slice(
-          1,
-          el.parentElement.children[0].children[1].children[0].innerText
-            .length - 1
-        );
-      } else if (el.classList.contains("labels-module")) {
-        issueId = el.parentElement.parentElement.children[0].children[1].children[0].innerText.slice(
-          1,
-          el.parentElement.parentElement.children[0].children[1].children[0]
-            .innerText.length - 1
-        );
-      }
-      const assignees = document.getElementsByClassName(
-        "author_link has-tooltip"
-      );
-      // eslint-disable-next-line no-plusplus
-      for (let i = 0; i < assignees.length; i++) {
-        if (getUsername(assignees[i]) === window.gon.current_username) {
+      const issue = el.closest("div.issue-info-container"); // eslint-disable-line no-undef
+      const issueIdFull = issue.children[0].children[1].children[0].innerText;
+      internalIssueId = issue.closest("li").id; // eslint-disable-line no-undef
+      issueId = issueIdFull.slice(1, issueIdFull.length - 1);
+
+      assignees = issue.getElementsByClassName("author_link has-tooltip");
+      // eslint-disable-next-line no-restricted-syntax
+      for (const assignee of assignees) {
+        if (getUsername(assignee) === currentUsername) {
           assigned = true;
-          assignees[i].parentElement.remove();
           break;
         }
       }
     } else {
-      const assignees = document.getElementsByClassName("user-item");
-      // eslint-disable-next-line no-plusplus
-      for (let i = 0; i < assignees.length; i++) {
-        if (
-          getUsername(assignees[i].children[0]) === window.gon.current_username
-        ) {
+      assignees = document.getElementsByClassName("user-item");
+      // eslint-disable-next-line no-restricted-syntax
+      for (const assignee of assignees) {
+        if (getUsername(assignee.children[0]) === currentUsername) {
           assigned = true;
           break;
         }
@@ -224,27 +151,22 @@ document.addEventListener("assign_me_to_issue_or_mr", e => {
         document.getElementsByClassName("author_link bold").length !== 0 &&
         !assigned &&
         document.getElementsByClassName("author_link bold")[0].children[1]
-          .innerText === window.gon.current_user_fullname
+          .innerText === currentUserFullName
       ) {
-        // eslint-disable-line no-undef
         assigned = true;
-      }
-      if (assigned) {
-        noAssigneeButton();
       }
       issueId = parts[4];
     }
-    if (assigned) {
-      fn = FUNCTIONS.SELF_UNASSIGN_MR;
-    }
-    if (!assigned) {
-      optimisticUpdate(
-        window.gon.current_username, // eslint-disable-line no-undef
-        window.gon.current_user_fullname, // eslint-disable-line no-undef
-        window.gon.current_user_avatar_url, // eslint-disable-line no-undef
-        route
-      );
-    }
+    const fn = assigned ? FUNCTIONS.SELF_UNASSIGN_MR : FUNCTIONS.SELF_ASSIGN_MR;
+    optimisticUpdate(
+      window.gon.current_username, // eslint-disable-line no-undef
+      window.gon.current_user_fullname, // eslint-disable-line no-undef
+      window.gon.current_user_avatar_url, // eslint-disable-line no-undef
+      route,
+      internalIssueId,
+      assigned,
+      assignees
+    );
     document.dispatchEvent(
       new CustomEvent("refined-gitlab", {
         detail: {

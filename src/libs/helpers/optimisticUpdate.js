@@ -1,30 +1,55 @@
 import ROUTES from "../ROUTES";
+import noAssigneeButton from "./../../libs/helpers/noAssigneeButton";
 
-export default (currentUsername, fullName, avatarLink, route) => {
+export default (
+  currentUsername,
+  fullName,
+  avatarLink,
+  route,
+  issueId,
+  assigned,
+  assignees
+) => {
   if (route === ROUTES.ISSUES || route === ROUTES.MRS) {
-    const avatar = document.createElement("img");
-    avatar.setAttribute("width", "16");
-    avatar.setAttribute("src", `${avatarLink}`);
-    avatar.setAttribute("alt", "");
-    avatar.className = "avatar avatar-inline s16";
-    const link = document.createElement("a");
-    link.className = "author_link has-tooltip";
-    link.setAttribute("title", "");
-    link.setAttribute("data-container", "body");
-    link.setAttribute("href", `https://gitlab.com/${currentUsername}`);
-    link.setAttribute("data-original-title", `Assigned to ${fullName}`);
-    link.appendChild(avatar);
-    const list = document.createElement("li");
-    list.appendChild(link);
-    document
-      .getElementsByClassName("controls")[0]
-      .insertBefore(
-        list,
-        document.getElementsByClassName("controls")[0].children[0]
-      );
+    if (!assigned) {
+      const parent = document.getElementsByClassName("issuable-list")[0];
+      let index;
+      // eslint-disable-next-line no-plusplus
+      for (let i = 0; i < parent.children.length; i++) {
+        if (parent.children[i].id === issueId) {
+          index = i;
+          break;
+        }
+      }
+      const el = document.getElementsByClassName("controls")[index];
+      if (el.children.length > 1) {
+        el.children[0].remove();
+      }
+      const avatar = document.createElement("img");
+      avatar.setAttribute("width", "16");
+      avatar.setAttribute("src", `${avatarLink}`);
+      avatar.setAttribute("alt", "");
+      avatar.className = "avatar avatar-inline s16";
+      const link = document.createElement("a");
+      link.className = "author_link has-tooltip";
+      link.setAttribute("title", "");
+      link.setAttribute("data-container", "body");
+      link.setAttribute("href", `https://gitlab.com/${currentUsername}`);
+      link.setAttribute("data-original-title", `Assigned to ${fullName}`);
+      link.appendChild(avatar);
+      const list = document.createElement("li");
+      list.appendChild(link);
+      el.insertBefore(list, el.children[0]);
+    } else {
+      // eslint-disable-next-line no-restricted-syntax
+      for (const assignee of assignees) {
+        assignee.remove();
+      }
+    }
+  } else if (assigned) {
+    noAssigneeButton();
   } else {
     const el = document.getElementsByClassName("value hide-collapsed")[0];
-    el.children[0].remove();
     const author = document.createElement("span");
     author.classList.add("author");
     author.innerText = fullName;
@@ -37,11 +62,11 @@ export default (currentUsername, fullName, avatarLink, route) => {
     avatar.setAttribute("alt", `${fullName}'s avatar`);
     avatar.setAttribute("width", "32");
     const link = document.createElement("a");
-    link.setAttribute("href", `https://gitlab.com/${username}`);
+    link.setAttribute("href", `https://gitlab.com/${currentUsername}`);
     link.className = "author_link bold";
     link.appendChild(avatar);
     link.appendChild(author);
     link.appendChild(username);
-    el.appendChild(link);
+    el.replaceChild(link, el.children[0]);
   }
 };
