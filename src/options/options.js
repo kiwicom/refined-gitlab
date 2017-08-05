@@ -62,6 +62,12 @@ export default [
   },
   {
     type: "text",
+    name: "labelShortcut0",
+    label: "Label toggle shortcut #0",
+    defaultValue: "",
+  },
+  {
+    type: "text",
     name: "appendToDeploySection",
     label: "Append to deploy section",
     description: "",
