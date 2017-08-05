@@ -1,7 +1,7 @@
 import FUNCTIONS from "./libs/FUNCTIONS";
-import ROUTES from "./libs/ROUTES";
 import getUsername from "./libs/helpers/getUsername";
 import optimisticUpdate from "./libs/helpers/optimisticUpdate";
+import ROUTES from "./libs/ROUTES";
 import pathnameToRoute from "./libs/helpers/pathnameToRoute";
 
 function addOrRemove(array, value) {
@@ -38,51 +38,59 @@ document.addEventListener("refined-gitlab", e => {
   if (e.detail.fn === FUNCTIONS.bindLabelsKeyboardShortcuts) {
     const { mapping } = e.detail;
 
-    window.Mousetrap.bind(["1", "2", "3", "4", "5", "6", "7", "8", "9"], ev => {
-      const key = ev.key;
-      const number = Number(key);
-      const label = mapping[number];
+    window.Mousetrap.bind(
+      ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"],
+      ev => {
+        const key = ev.key;
 
-      if (label) {
-        const parts = location.pathname.split("/");
-        const group = parts[1];
-        const project = parts[2];
-        const issueId = parts[4];
+        const number = Number(key);
+        const label = mapping[number];
+        const route = pathnameToRoute(window.location.pathname);
 
-        $.ajax({
-          type: "GET",
-          headers: {
-            "X-CSRF-Token": $.rails.csrfToken(),
-          },
-          url: `/${group}/${project}/issues/${issueId}.json?basic=true`,
-          success: res => {
-            const labelsAlready = res.labels.map(x => x.id);
-            const labelsNew = addOrRemove(labelsAlready, label);
-            const labelsString = labelsNew
-              .map(x => `issue%5Blabel_ids%5D%5B%5D=${x}`)
-              .join("&");
+        if (label) {
+          const parts = location.pathname.split("/");
+          const group = parts[1];
+          const project = parts[2];
+          const issueId = parts[4];
 
-            $.ajax({
-              type: "PUT",
-              headers: {
-                "X-CSRF-Token": $.rails.csrfToken(),
-              },
-              url: `/${group}/${project}/issues/${issueId}.json?basic=true`,
-              contentType: "application/x-www-form-urlencoded",
-              data: labelsString,
-              success: () => {
-                window.location.reload();
-              },
-            });
-          },
-        });
-      } else {
-        // eslint-disable-next-line no-alert
-        window.alert(
-          `No shortcut label set in slot ${number}, set it in extension settings`
-        );
+          const prefix = route === ROUTES.ISSUE ? "issue" : "merge_request";
+
+          const labelsAlready = new Set(
+            [].slice
+              .call(
+                document.querySelectorAll(
+                  `input[name='${prefix}[label_names][]']`
+                )
+              )
+              .map(x => Number(x.value))
+          );
+
+          const labelsNew = addOrRemove(Array.from(labelsAlready), label);
+
+          const labelsString = Array.from(labelsNew)
+            .map(x => `${prefix}%5Blabel_ids%5D%5B%5D=${x}`)
+            .join("&");
+
+          $.ajax({
+            type: "PUT",
+            headers: {
+              "X-CSRF-Token": $.rails.csrfToken(),
+            },
+            url: `/${group}/${project}/${route === ROUTES.ISSUE ? "issues" : "merge_requests"}/${issueId}.json`,
+            contentType: "application/x-www-form-urlencoded",
+            data: labelsString,
+            success: () => {
+              window.location.reload();
+            },
+          });
+        } else {
+          // eslint-disable-next-line no-alert
+          window.alert(
+            `No shortcut label set in slot ${number}, set it in extension settings`
+          );
+        }
       }
-    });
+    );
   }
 
   if (e.detail.fn === FUNCTIONS.bindAssignKeyboardShortcuts) {
