@@ -3,38 +3,12 @@ import getUsername from "./libs/helpers/getUsername";
 import optimisticUpdate from "./libs/helpers/optimisticUpdate";
 import ROUTES from "./libs/ROUTES";
 import pathnameToRoute from "./libs/helpers/pathnameToRoute";
+import detectGlobals from "./libs/helpers/detectGlobals";
+import addOrRemove from "./libs/helpers/addOrRemove";
 
-function addOrRemove(array, value) {
-  const index = array.indexOf(value);
-  if (index === -1) {
-    array.push(value);
-  } else {
-    array.splice(index, 1);
-  }
-  return array;
-}
+const parentElClassNames = ["merge-request", "issue"];
 
 document.addEventListener("refined-gitlab", e => {
-  if (
-    e.detail.fn === FUNCTIONS.SELF_ASSIGN_MR ||
-    e.detail.fn === FUNCTIONS.SELF_UNASSIGN_MR
-  ) {
-    const { issueId, group, project } = e.detail;
-    let { userId } = e.detail;
-    if (e.detail.fn === FUNCTIONS.SELF_UNASSIGN_MR) {
-      userId = 0;
-    }
-    $.ajax({
-      type: "PUT",
-      headers: {
-        "X-CSRF-Token": $.rails.csrfToken(),
-      },
-      url: `/${group}/${project}/issues/${issueId}.json?basic=true`,
-      contentType: "application/x-www-form-urlencoded",
-      data: `issue%5Bassignee_ids%5D%5B%5D=${userId}`,
-    });
-  }
-
   if (e.detail.fn === FUNCTIONS.bindLabelsKeyboardShortcuts) {
     const { mapping } = e.detail;
 
@@ -53,13 +27,23 @@ document.addEventListener("refined-gitlab", e => {
           const project = parts[2];
           const issueId = parts[4];
 
-          const prefix = route === ROUTES.ISSUE ? "issue" : "merge_request";
+          const issuableTypeInternal = [ROUTES.ISSUE, ROUTES.ISSUES].includes(
+            route
+          )
+            ? "issue"
+            : "merge_request";
+          const issuableTypeInternalPlural = [
+            ROUTES.ISSUE,
+            ROUTES.ISSUES,
+          ].includes(route)
+            ? "issues"
+            : "merge_requests";
 
           const labelsAlready = new Set(
             [].slice
               .call(
                 document.querySelectorAll(
-                  `input[name='${prefix}[label_names][]']`
+                  `input[name='${issuableTypeInternal}[label_names][]']`
                 )
               )
               .map(x => Number(x.value))
@@ -68,7 +52,7 @@ document.addEventListener("refined-gitlab", e => {
           const labelsNew = addOrRemove(Array.from(labelsAlready), label);
 
           const labelsString = Array.from(labelsNew)
-            .map(x => `${prefix}%5Blabel_ids%5D%5B%5D=${x}`)
+            .map(x => `${issuableTypeInternal}%5Blabel_ids%5D%5B%5D=${x}`)
             .join("&");
 
           $.ajax({
@@ -76,7 +60,7 @@ document.addEventListener("refined-gitlab", e => {
             headers: {
               "X-CSRF-Token": $.rails.csrfToken(),
             },
-            url: `/${group}/${project}/${route === ROUTES.ISSUE ? "issues" : "merge_requests"}/${issueId}.json`,
+            url: `/${group}/${project}/${issuableTypeInternalPlural}/${issueId}.json`,
             contentType: "application/x-www-form-urlencoded",
             data: labelsString,
             success: () => {
@@ -84,7 +68,6 @@ document.addEventListener("refined-gitlab", e => {
             },
           });
         } else {
-          // eslint-disable-next-line no-alert
           window.alert(
             `No shortcut label set in slot ${number}, set it in extension settings`
           );
@@ -99,8 +82,8 @@ document.addEventListener("refined-gitlab", e => {
     let x, y; // eslint-disable-line one-var
     if (route === ROUTES.ISSUES || route === ROUTES.MRS) {
       document.onmousemove = _e => {
-        x = _e.pageX;
-        y = _e.pageY;
+        x = _e.pageX - window.pageXOffset;
+        y = _e.pageY - window.pageYOffset;
       };
     }
 
@@ -121,70 +104,113 @@ document.addEventListener("refined-gitlab", e => {
 
 document.addEventListener("assign_me_to_issue_or_mr", e => {
   const { route } = e.detail;
-  const userId = window.gon.current_user_id; // eslint-disable-line no-undef
-  if (userId !== undefined) {
-    let issueId, internalIssueId, assignees; // eslint-disable-line one-var
-    let assigned = false;
-    const parts = window.location.pathname.split("/");
-    const currentUsername = window.gon.current_username; // eslint-disable-line no-undef
-    const currentUserFullName = window.gon.current_user_fullname; // eslint-disable-line no-undef
+  const { userId, userName, userFullName, userAvatar } = detectGlobals();
 
-    if (route === ROUTES.ISSUES || route === ROUTES.MRS) {
-      const { x, y } = e.detail;
+  const issuableTypeInternal = [ROUTES.ISSUE, ROUTES.ISSUES].includes(route)
+    ? "issue"
+    : "merge_request";
+  const issuableTypeInternalPlural = [ROUTES.ISSUE, ROUTES.ISSUES].includes(
+    route
+  )
+    ? "issues"
+    : "merge_requests";
 
-      const el = document.elementFromPoint(x, y);
-      const issue = el.closest("div.issue-info-container"); // eslint-disable-line no-undef
-      const issueIdFull = issue.children[0].children[1].children[0].innerText;
-      internalIssueId = issue.closest("li").id; // eslint-disable-line no-undef
-      issueId = issueIdFull.slice(1, issueIdFull.length - 1);
-
-      assignees = issue.getElementsByClassName("author_link has-tooltip");
-      // eslint-disable-next-line no-restricted-syntax
-      for (const assignee of assignees) {
-        if (getUsername(assignee) === currentUsername) {
-          assigned = true;
-          break;
-        }
-      }
-    } else {
-      assignees = document.getElementsByClassName("user-item");
-      // eslint-disable-next-line no-restricted-syntax
-      for (const assignee of assignees) {
-        if (getUsername(assignee.children[0]) === currentUsername) {
-          assigned = true;
-          break;
-        }
-      }
-      if (
-        document.getElementsByClassName("author_link bold").length !== 0 &&
-        !assigned &&
-        document.getElementsByClassName("author_link bold")[0].children[1]
-          .innerText === currentUserFullName
-      ) {
-        assigned = true;
-      }
-      issueId = parts[4];
-    }
-    const fn = assigned ? FUNCTIONS.SELF_UNASSIGN_MR : FUNCTIONS.SELF_ASSIGN_MR;
-    optimisticUpdate(
-      window.gon.current_username, // eslint-disable-line no-undef
-      window.gon.current_user_fullname, // eslint-disable-line no-undef
-      window.gon.current_user_avatar_url, // eslint-disable-line no-undef
-      route,
-      internalIssueId,
-      assigned,
-      assignees
-    );
-    document.dispatchEvent(
-      new CustomEvent("refined-gitlab", {
-        detail: {
-          fn,
-          issueId,
-          userId,
-          group: parts[1],
-          project: parts[2],
-        },
-      })
-    );
+  if (!userId) {
+    window.alert("Not logged in");
+    return;
   }
+
+  let issuableId, issuableIdInternal; // eslint-disable-line one-var
+
+  let assignees;
+  let assigned = false;
+  const parts = window.location.pathname.split("/");
+
+  if (route === ROUTES.ISSUES || route === ROUTES.MRS) {
+    const { x, y } = e.detail;
+
+    const hoverEl = document.elementFromPoint(x, y);
+
+    // Find element wrapping whole Issue/Merge request
+    // ---
+    let parentEl;
+    // eslint-disable-next-line no-restricted-syntax
+    for (const className of parentElClassNames) {
+      if (hoverEl.classList.contains(className)) {
+        parentEl = hoverEl;
+        break;
+      }
+
+      const candidateEL = hoverEl.closest(`.${className}`);
+      if (candidateEL) {
+        parentEl = candidateEL;
+        break;
+      }
+    }
+    if (!parentEl) {
+      window.alert("Unable to detect issue / merge request");
+      return;
+    }
+
+    // Parse info
+    // ---
+    issuableIdInternal = Number(parentEl.dataset.id); // data-id="123456"
+    issuableId = Number(
+      parentEl.querySelector(".title a").getAttribute("href").split("/").last()
+    ); // href="xx/yy/zz/123"
+
+    assignees = parentEl.getElementsByClassName("author_link has-tooltip");
+    // eslint-disable-next-line no-restricted-syntax
+    for (const assignee of assignees) {
+      if (getUsername(assignee) === userName) {
+        assigned = true;
+        break;
+      }
+    }
+  } else {
+    assignees = document.getElementsByClassName("user-item");
+    // eslint-disable-next-line no-restricted-syntax
+    for (const assignee of assignees) {
+      if (getUsername(assignee.children[0]) === userName) {
+        assigned = true;
+        break;
+      }
+    }
+    if (
+      document.getElementsByClassName("author_link bold").length !== 0 &&
+      !assigned &&
+      document.getElementsByClassName("author_link bold")[0].children[1]
+        .innerText === userFullName
+    ) {
+      assigned = true;
+    }
+    issuableId = parts[4];
+  }
+
+  const fn = assigned ? FUNCTIONS.SELF_UNASSIGN_MR : FUNCTIONS.SELF_ASSIGN_MR;
+
+  optimisticUpdate(
+    userName, // eslint-disable-line no-undef
+    userFullName, // eslint-disable-line no-undef
+    userAvatar, // eslint-disable-line no-undef
+    route,
+    issuableIdInternal,
+    assigned,
+    assignees
+  );
+
+  const newUserId = fn === FUNCTIONS.SELF_UNASSIGN_MR ? 0 : userId;
+  const url = [ROUTES.ISSUE, ROUTES.ISSUES].includes(route)
+    ? "%5Bassignee_ids%5D%5B%5D"
+    : "%5Bassignee_id%5D";
+
+  $.ajax({
+    type: "PUT",
+    headers: {
+      "X-CSRF-Token": $.rails.csrfToken(),
+    },
+    url: `/${parts[1]}/${parts[2]}/${issuableTypeInternalPlural}/${issuableId}.json?basic=true`,
+    contentType: "application/x-www-form-urlencoded",
+    data: `${issuableTypeInternal}${url}=${newUserId}`,
+  });
 });

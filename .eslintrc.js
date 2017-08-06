@@ -3,6 +3,9 @@ module.exports = {
     browser: true,
   },
   extends: ["airbnb-base", "prettier"],
+  rules: {
+    "no-alert": ["off"],
+  },
   globals: {
     $: false,
   },

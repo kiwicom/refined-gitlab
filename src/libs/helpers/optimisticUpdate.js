@@ -6,7 +6,7 @@ export default (
   fullName,
   avatarLink,
   route,
-  issueId,
+  issuableId,
   assigned,
   assignees
 ) => {
@@ -16,7 +16,7 @@ export default (
       let index;
       // eslint-disable-next-line no-plusplus
       for (let i = 0; i < parent.children.length; i++) {
-        if (parent.children[i].id === issueId) {
+        if (Number(parent.children[i].dataset.id) === issuableId) {
           index = i;
           break;
         }
