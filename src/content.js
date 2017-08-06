@@ -16,7 +16,8 @@ import showUsername from "./libs/transformations/showUsername";
 import assignMe from "./libs/transformations/assignMe";
 import bindLabelsKeyboardShortcuts
   from "./libs/transformations/bindLabelsKeyboardShortcuts";
-import discussionOverComment from "./libs/transformations/discussionOverComment";
+import discussionOverComment
+  from "./libs/transformations/discussionOverComment";
 
 const s = document.createElement("script");
 s.src = chrome.runtime.getURL("agent.js"); // eslint-disable-line no-undef
@@ -24,12 +25,18 @@ s.src = chrome.runtime.getURL("agent.js"); // eslint-disable-line no-undef
 
 storage.load().then(() => {
   const route = pathnameToRoute(location.pathname);
+
+  // Common
+  // ---
+  showUsername(route);
+
+  // Route specific
+  // ---
   switch (route) { // eslint-disable-line default-case
     case ROUTES.MR:
     case ROUTES.ISSUE:
       // Enable when it will work properly
       // assignMe();
-      // showUsername(route);
       expandAll();
       rotateDiscussion("notes-list");
       expandSidePanel();
@@ -42,8 +49,6 @@ storage.load().then(() => {
     case ROUTES.ISSUES:
       filterItems("filtered-search-box");
       alignLabels(route);
-      // Enable when it will work properly
-      // showUsername(route);
       break;
   }
 
