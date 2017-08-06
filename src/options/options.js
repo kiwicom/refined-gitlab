@@ -8,6 +8,12 @@ export default [
   },
   {
     type: "text",
+    name: "assignShortcut",
+    label: "<a href='https://craig.is/killing/mice#keys'>Supported syntax</a>",
+    defaultValue: "alt+a",
+  },
+  {
+    type: "text",
     name: "labelShortcut1",
     label: "Label toggle shortcut #1",
     defaultValue: "",
