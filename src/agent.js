@@ -5,10 +5,57 @@ import ROUTES from "./libs/ROUTES";
 import pathnameToRoute from "./libs/helpers/pathnameToRoute";
 import detectGlobals from "./libs/helpers/detectGlobals";
 import addOrRemove from "./libs/helpers/addOrRemove";
+import isProjectPage from "./libs/helpers/isProjectPage";
+import detectProjectSlug from "./libs/helpers/detectProjectSlug";
+import detectProjectLabelCategories
+  from "./libs/helpers/detectProjectLabelCategories";
+import divideLabels from "./libs/transformations/divideLabels";
+import alignLabels from "./libs/transformations/alignLabels";
 
 const parentElClassNames = ["merge-request", "issue"];
 
 document.addEventListener("refined-gitlab", e => {
+  const route = pathnameToRoute(window.location.pathname);
+
+  if (e.detail.fn === "ready") {
+    const { storage } = e.detail;
+
+    let labelCategories;
+    if (isProjectPage(document)) {
+      const projectHash = detectProjectSlug();
+      labelCategories = storage[`labelCategories:${projectHash}`];
+      if (!labelCategories) {
+        detectProjectLabelCategories().then(categories => {
+          document.dispatchEvent(
+            new CustomEvent("refined-gitlab", {
+              detail: {
+                fn: "storageSet",
+                key: `labelCategories:${projectHash}`,
+                val: categories.join(","),
+              },
+            })
+          );
+
+          window.location.reload();
+        });
+        return; // Do not continue
+      }
+    }
+
+    switch (route) { // eslint-disable-line default-case
+      case ROUTES.MR:
+      case ROUTES.ISSUE:
+        // Enable when it will work properly
+        // showUsername(route);
+        divideLabels(labelCategories);
+        break;
+      case ROUTES.MRS:
+      case ROUTES.ISSUES:
+        alignLabels(route, labelCategories);
+        break;
+    }
+  }
+
   if (e.detail.fn === FUNCTIONS.bindLabelsKeyboardShortcuts) {
     const { mapping } = e.detail;
 
@@ -19,7 +66,6 @@ document.addEventListener("refined-gitlab", e => {
 
         const number = Number(key);
         const label = mapping[number];
-        const route = pathnameToRoute(window.location.pathname);
 
         if (label) {
           const parts = location.pathname.split("/");
@@ -78,7 +124,6 @@ document.addEventListener("refined-gitlab", e => {
 
   if (e.detail.fn === FUNCTIONS.bindAssignKeyboardShortcuts) {
     const { shortcut } = e.detail;
-    const route = pathnameToRoute(window.location.pathname);
     let x, y; // eslint-disable-line one-var
     if (route === ROUTES.ISSUES || route === ROUTES.MRS) {
       document.onmousemove = _e => {

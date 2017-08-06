@@ -1,110 +1,87 @@
-export default [
-  {
+export default {
+  assignShortcut: {
     type: "text",
-    name: "labelCategories",
-    label: "Label categories",
-    description: "",
-    defaultValue: "module,type,prio,process,qa,design,testing,waiting,weight,no-module",
-  },
-  {
-    type: "text",
-    name: "assignShortcut",
     label: "<a href='https://craig.is/killing/mice#keys'>Supported syntax</a>",
     defaultValue: "alt+a",
   },
-  {
+  labelShortcut1: {
     type: "text",
-    name: "labelShortcut1",
     label: "Label toggle shortcut #1",
     defaultValue: "",
   },
-  {
+  labelShortcut2: {
     type: "text",
-    name: "labelShortcut2",
     label: "Label toggle shortcut #2",
     defaultValue: "",
   },
-  {
+  labelShortcut3: {
     type: "text",
-    name: "labelShortcut3",
     label: "Label toggle shortcut #3",
     defaultValue: "",
   },
-  {
+  labelShortcut4: {
     type: "text",
-    name: "labelShortcut4",
     label: "Label toggle shortcut #4",
     defaultValue: "",
   },
-  {
+  labelShortcut5: {
     type: "text",
-    name: "labelShortcut5",
     label: "Label toggle shortcut #5",
     defaultValue: "",
   },
-  {
+  labelShortcut6: {
     type: "text",
-    name: "labelShortcut6",
     label: "Label toggle shortcut #6",
     defaultValue: "",
   },
-  {
+  labelShortcut7: {
     type: "text",
-    name: "labelShortcut7",
     label: "Label toggle shortcut #7",
     defaultValue: "",
   },
-  {
+  labelShortcut8: {
     type: "text",
-    name: "labelShortcut8",
     label: "Label toggle shortcut #8",
     defaultValue: "",
   },
-  {
+  labelShortcut9: {
     type: "text",
-    name: "labelShortcut9",
     label: "Label toggle shortcut #9",
     defaultValue: "",
   },
-  {
+  labelShortcut0: {
     type: "text",
-    name: "labelShortcut0",
     label: "Label toggle shortcut #0",
     defaultValue: "",
   },
-  {
+  appendToDeploySection: {
     type: "text",
-    name: "appendToDeploySection",
     label: "Append to deploy section",
     description: "",
     defaultValue: "<a href='https://skymock.skypicker.com?baseUrl=<%= deployLink %>cs' target='_blank'>Skymock</a>",
   },
-  {
+  appendToPipelineSection: {
     type: "text",
-    name: "appendToPipelineSection",
     label: "Append to pipeline section",
     description: "",
     defaultValue: "<a href='registry.skypicker.com:5005/<%= group %>/<%= project %>:<%= hash %>' target='_blank'>Registry</a>",
   },
-  {
+  disableLabelColors: {
     type: "checkbox",
-    name: "disableLabelColors",
     label: "Disable label colors",
     description: "",
     defaultValue: false,
   },
-  {
+  hideRepoAvatars: {
     type: "checkbox",
-    name: "hideRepoAvatars",
     label: "Hide repo avatars",
     description: "",
     defaultValue: true,
   },
-  {
+  doTrack: {
     type: "checkbox",
-    name: "doTrack",
     label: "Usage reports",
     description: "Send anonymous usage reports to Google Analytics.",
     defaultValue: true,
   },
-];
+};

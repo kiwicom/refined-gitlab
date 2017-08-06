@@ -1,7 +1,6 @@
 import ROUTES from "../ROUTES";
-import * as storage from "./../../options/storage";
 
-export default route => {
+export default (route, labelCategories) => {
   let itemsClassName;
   switch (route) {
     case ROUTES.MRS:
@@ -22,17 +21,13 @@ export default route => {
     labelsEl.classList.add("labels");
 
     const moduleEls = {};
-    storage
-      .get("labelCategories")
-      .split(",")
-      .concat(["no-module"])
-      .forEach(module => {
-        const el = document.createElement("div");
-        el.classList.add("labels-module");
-        el.setAttribute("data-module", module);
-        labelsEl.appendChild(el);
-        moduleEls[module] = el;
-      });
+    labelCategories.split(",").concat(["no-module"]).forEach(module => {
+      const el = document.createElement("div");
+      el.classList.add("labels-module");
+      el.setAttribute("data-module", module);
+      labelsEl.appendChild(el);
+      moduleEls[module] = el;
+    });
 
     const labelsCollection = mrEl.getElementsByClassName("label-link");
     const labelsArray = [].slice.call(labelsCollection);
