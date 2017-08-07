@@ -1,3 +1,7 @@
+.issue-info-container {
+  flex-wrap: wrap;
+}
+
 .labels {
     display: table;
     table-layout: fixed;
