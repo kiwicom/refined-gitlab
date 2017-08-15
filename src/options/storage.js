@@ -6,11 +6,13 @@ const chromep = new ChromePromise();
 const store = {};
 const defaults = {};
 
-options.forEach(item => {
-  defaults[item.name] = item.defaultValue;
+Object.entries(options).forEach(([key, val]) => {
+  defaults[key] = val.defaultValue;
 });
 
 export const get = key => store[key];
+
+export const getAll = () => store;
 
 export const set = async (key, value) => {
   const data = {

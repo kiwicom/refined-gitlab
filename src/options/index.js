@@ -5,11 +5,27 @@ import options from "./options";
 const formEl = document.querySelector("#options");
 
 storage.load().then(() => {
-  options.forEach(item => {
+  Object.entries(options).forEach(([key, val]) => {
     formEl.innerHTML += components({
-      ...item,
-      value: storage.get(item.name),
+      name: key,
+      type: val.type,
+      label: val.label,
+      defaultValue: val.defaultValue,
+      value: storage.get(key),
     });
+  });
+
+  formEl.innerHTML += "<hr />";
+
+  Object.entries(storage.getAll()).forEach(([key, val]) => {
+    if (!options[key]) {
+      formEl.innerHTML += components({
+        name: key,
+        type: "text",
+        label: key,
+        value: val,
+      });
+    }
   });
 });
 
