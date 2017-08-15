@@ -13,11 +13,10 @@ import filterItems from "./libs/transformations/filterItems";
 import alignLabels from "./libs/transformations/alignLabels";
 import appendTo from "./libs/transformations/appendTo";
 import showUsername from "./libs/transformations/showUsername";
-import bindLabelsKeyboardShortcuts
-  from "./libs/transformations/bindLabelsKeyboardShortcuts";
+import bindLabelsKeyboardShortcuts from "./libs/transformations/bindLabelsKeyboardShortcuts";
 import assignMeTo from "./libs/transformations/assignMeTo";
-import discussionOverComment
-  from "./libs/transformations/discussionOverComment";
+import discussionOverComment from "./libs/transformations/discussionOverComment";
+import lastTimeVisitedThread from "./libs/transformations/lastTimeVisitedThread";
 
 const s = document.createElement("script");
 s.src = chrome.runtime.getURL("agent.js"); // eslint-disable-line no-undef
@@ -39,6 +38,7 @@ storage.load().then(() => {
       appendTo();
       bindLabelsKeyboardShortcuts();
       discussionOverComment();
+      lastTimeVisitedThread();
       break;
     case ROUTES.MRS:
     case ROUTES.ISSUES:
