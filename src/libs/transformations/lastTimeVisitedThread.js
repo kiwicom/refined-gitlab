@@ -13,12 +13,13 @@ export default () => {
       const noteDate = new Date(noteTime.getAttribute("datetime"));
       if (noteDate > date || i === notes.children.length - 1) {
         const el = document.createElement("div");
-        el.style.height = "20px";
-        el.style.backgroundColor = "orange";
-        el.style.textAlign = "center";
+        el.setAttribute(
+          "style",
+          "height:20px; background-color: orange; text-align: center; color: white;"
+        );
         el.innerText = noteDate > date
           ? "Last Time You Saw This Conversation"
-          : "You are up to date";
+          : "You've Read Everything In This Conversation";
         if (noteDate > date) {
           notes.children[i].parentElement.insertBefore(el, notes.children[i]);
         } else {
