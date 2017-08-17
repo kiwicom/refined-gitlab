@@ -1,6 +1,7 @@
 module.exports = {
   env: {
     browser: true,
+    mocha: true,
   },
   extends: ["airbnb-base", "prettier"],
   rules: {
@@ -8,5 +9,7 @@ module.exports = {
   },
   globals: {
     $: false,
+    cy: false,
+    Cypress: false,
   },
 };
