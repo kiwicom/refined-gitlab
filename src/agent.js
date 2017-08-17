@@ -31,7 +31,7 @@ document.addEventListener("refined-gitlab", e => {
               detail: {
                 fn: "storageSet",
                 key: `labelCategories:${projectHash}`,
-                val: categories.join(","),
+                val: categories.join(",") || "__NO_CATEGORIES_DETECTED__",
               },
             })
           );
