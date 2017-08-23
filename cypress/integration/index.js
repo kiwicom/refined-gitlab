@@ -56,4 +56,12 @@ describe("Refined Gitlab", () => {
     cy.createLabel(projectName, "code/approved", "Code / Approved", "#cccccc");
     cy.createLabel(projectName, "code/changes-needed", "Code / Changes needed", "#cccccc");
   });
+
+  it("should create issues", () => {
+    cy.visit(`/${Cypress.env("gitlab_user")}/${projectName}`);
+
+    cy.createIssue(projectName, "Example issue #1", `Lorem ipsum example...\n/label ~"prio/low"`);
+    cy.createIssue(projectName, "Example issue #2" , `Lorem ipsum example...\n/label ~"prio/medium"`);
+    cy.createIssue(projectName, "Example issue #3" , `Lorem ipsum example...\n/label ~"prio/high"`);
+  })
 });
