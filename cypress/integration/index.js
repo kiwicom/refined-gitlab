@@ -35,12 +35,7 @@ describe("Refined Gitlab", () => {
     cy.createLabel(projectName, "module/c", "Module / C", "#cccccc");
 
     cy.createLabel(projectName, "prio/low", "Priority / Low", prioScale[0]);
-    cy.createLabel(
-      projectName,
-      "prio/medium",
-      "Priority / Medium",
-      prioScale[1]
-    );
+    cy.createLabel(projectName, "prio/medium", "Priority / Medium", prioScale[1]);
     cy.createLabel(projectName, "prio/high", "Priority / High", prioScale[2]);
 
     cy.createLabel(projectName, "weight/1", "Weight / 1", wieghtScale[0]);
@@ -51,44 +46,14 @@ describe("Refined Gitlab", () => {
 
     cy.createLabel(projectName, "qa/to-review", "QA / To review", "#cccccc");
     cy.createLabel(projectName, "qa/approved", "QA / Approved", "#cccccc");
-    cy.createLabel(
-      projectName,
-      "qa/changes-needed",
-      "QA / Changes needed",
-      "#cccccc"
-    );
+    cy.createLabel(projectName, "qa/changes-needed", "QA / Changes needed", "#cccccc");
 
-    cy.createLabel(
-      projectName,
-      "design/to-review",
-      "Design / To review",
-      "#cccccc"
-    );
-    cy.createLabel(
-      projectName,
-      "design/approved",
-      "Design / Approved",
-      "#cccccc"
-    );
-    cy.createLabel(
-      projectName,
-      "design/changes-needed",
-      "Design / Changes needed",
-      "#cccccc"
-    );
+    cy.createLabel(projectName, "design/to-review", "Design / To review", "#cccccc");
+    cy.createLabel(projectName, "design/approved", "Design / Approved", "#cccccc");
+    cy.createLabel(projectName, "design/changes-needed", "Design / Changes needed", "#cccccc");
 
-    cy.createLabel(
-      projectName,
-      "code/to-review",
-      "Code / To review",
-      "#cccccc"
-    );
+    cy.createLabel(projectName, "code/to-review", "Code / To review", "#cccccc");
     cy.createLabel(projectName, "code/approved", "Code / Approved", "#cccccc");
-    cy.createLabel(
-      projectName,
-      "code/changes-needed",
-      "Code / Changes needed",
-      "#cccccc"
-    );
+    cy.createLabel(projectName, "code/changes-needed", "Code / Changes needed", "#cccccc");
   });
 });

@@ -79,7 +79,6 @@
   },
   "lint-staged": {
     "*.js": [
-      "prettier --trailing-comma --write",
       "eslint --fix",
       "git add"
     ]
