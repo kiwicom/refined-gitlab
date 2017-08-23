@@ -58,13 +58,15 @@ export default {
     type: "text",
     label: "Append to deploy section",
     description: "",
-    defaultValue: "<a href='https://skymock.skypicker.com?baseUrl=<%= deployLink %>cs' target='_blank'>Skymock</a>",
+    defaultValue:
+      "<a href='https://skymock.skypicker.com?baseUrl=<%= deployLink %>cs' target='_blank'>Skymock</a>",
   },
   appendToPipelineSection: {
     type: "text",
     label: "Append to pipeline section",
     description: "",
-    defaultValue: "<a href='registry.skypicker.com:5005/<%= group %>/<%= project %>:<%= hash %>' target='_blank'>Registry</a>",
+    defaultValue:
+      "<a href='registry.skypicker.com:5005/<%= group %>/<%= project %>:<%= hash %>' target='_blank'>Registry</a>",
   },
   disableLabelColors: {
     type: "checkbox",

@@ -7,8 +7,7 @@ import detectGlobals from "./libs/helpers/detectGlobals";
 import addOrRemove from "./libs/helpers/addOrRemove";
 import isProjectPage from "./libs/helpers/isProjectPage";
 import detectProjectSlug from "./libs/helpers/detectProjectSlug";
-import detectProjectLabelCategories
-  from "./libs/helpers/detectProjectLabelCategories";
+import detectProjectLabelCategories from "./libs/helpers/detectProjectLabelCategories";
 import divideLabels from "./libs/transformations/divideLabels";
 import alignLabels from "./libs/transformations/alignLabels";
 
