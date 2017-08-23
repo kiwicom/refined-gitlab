@@ -1,30 +1,48 @@
 Cypress.addParentCommand(
   "createLabel",
-  (project, title, description, background) => {
-    const opts = { delay: 50 };
+  (projectName, title, description, color) => {
+    cy.window().then(win => {
+      win.$.ajax({
+        type: "POST",
+        headers: {
+          "X-CSRF-Token": win.$.rails.csrfToken(),
+        },
+        url: `/${Cypress.env("gitlab_user")}/${projectName}/labels`,
+        contentType: "application/x-www-form-urlencoded",
+        data: {
+          "label[title]": title,
+          "label[description]": description,
+          "label[color]": color,
+        },
+      });
+    });
 
-    cy
-      .visit(`/${Cypress.env("gitlab_user")}/${project}/labels/new`, opts)
-      .contains("New Label", opts);
+    // Would prefer simulating browser and filling form
+    // but cannot find a way to make it work
+    // it still fills everything into first input (title)
 
-    cy
-      .get("#label_title")
-      .focus()
-      .type(title, opts)
-      .should("have.value", title);
-
-    cy
-      .get("#label_description")
-      .focus()
-      .type(description, opts)
-      .should("have.value", description);
-
-    cy
-      .get("#label_color")
-      .focus()
-      .type(background, opts)
-      .should("have.value", background);
-
-    cy.get("#new_label", opts).submit(opts);
+    // cy
+    //   .visit(`/${Cypress.env("gitlab_user")}/${projectName}/labels/new`)
+    //   .contains("New Label");
+    //
+    // cy
+    //   .get("#label_title")
+    //   .focus()
+    //   .type(title)
+    //   .should("have.value", title);
+    //
+    // cy
+    //   .get("#label_description")
+    //   .focus()
+    //   .type(description)
+    //   .should("have.value", description);
+    //
+    // cy
+    //   .get("#label_color")
+    //   .focus()
+    //   .type(background)
+    //   .should("have.value", background);
+    //
+    // cy.get("#new_label").submit();
   }
 );
