@@ -18,6 +18,7 @@ describe("Refined Gitlab", () => {
   it.skip("should create new project", () => {
     cy.visit("/projects/new");
     cy.get("#project_path").type(projectName);
+    cy.get(".option-title").contains('Public').click();
     cy.get("#new_project").submit();
     cy.get("body").contains("The repository for this project is empty");
   });
@@ -57,7 +58,7 @@ describe("Refined Gitlab", () => {
     cy.createLabel(projectName, "code/changes-needed", "Code / Changes needed", "#cccccc");
   });
 
-  it("should create issues", () => {
+  it.skip("should create issues", () => {
     cy.visit(`/${Cypress.env("gitlab_user")}/${projectName}`);
 
     cy.createIssue(projectName, "Example issue #1", `Lorem ipsum example...\n/label ~"prio/low"`);
