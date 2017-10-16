@@ -35,7 +35,6 @@
     "webpack": "^2.6.1"
   },
   "scripts": {
-    "test": "jest ...",
     "build": "webpack",
     "watch": "webpack --watch",
     "release": "cd extension && webstore upload --auto-publish",
