@@ -18,7 +18,11 @@ storage.load().then(() => {
   formEl.innerHTML += "<hr />";
 
   Object.entries(storage.getAll()).forEach(([key, val]) => {
-    if (!options[key]) {
+    if (
+      !options[key] && // already added
+      !key.startsWith("_") && // notation for "private" options, usually cache
+      !key.includes("lastVisitedTime") // deprecated, but do not remove yet
+    ) {
       formEl.innerHTML += components({
         name: key,
         type: "text",
