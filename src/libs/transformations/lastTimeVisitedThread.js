@@ -29,5 +29,5 @@ export default () => {
       }
     }
   }
-  storage.set(`${window.location.pathname}/lastVisitedTime`, Date.now());
+  storage.set(`${window.location.pathname}/lastVisitedTime`, Date.now(), "local");
 };
