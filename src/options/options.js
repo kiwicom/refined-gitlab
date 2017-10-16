@@ -1,7 +1,7 @@
 export default {
   assignShortcut: {
     type: "text",
-    label: "<a href='https://craig.is/killing/mice#keys'>Supported syntax</a>",
+    label: "Assign shortcut <small><a href='https://craig.is/killing/mice#keys'>Supported syntax</a></small>",
     defaultValue: "alt+a",
   },
   labelShortcut1: {
