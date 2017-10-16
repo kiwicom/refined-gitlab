@@ -2,3 +2,4 @@ node_modules
 extension/
 .idea/
 cypress.env.json
+package-lock.json
