@@ -1,3 +1,5 @@
+<img src="./docs/assets/logo.png" alt="Refined GitLab" width="50%" />
+
 https://chrome.google.com/webstore/detail/pogpjdbfdfnmlegpbhdmlebognmbamko
 
 ---
