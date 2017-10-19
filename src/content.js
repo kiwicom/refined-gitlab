@@ -15,6 +15,8 @@ import bindLabelsKeyboardShortcuts from "./libs/transformations/bindLabelsKeyboa
 import assignMeTo from "./libs/transformations/assignMeTo";
 import discussionOverComment from "./libs/transformations/discussionOverComment";
 import lastTimeVisitedThread from "./libs/transformations/lastTimeVisitedThread";
+import mrSquashByDefault from "./libs/transformations/mrSquashByDefault";
+import mrRemoveBranchByDefault from "./libs/transformations/mrRemoveBranchByDefault";
 
 const s = document.createElement("script");
 s.src = chrome.runtime.getURL("agent.js"); // eslint-disable-line no-undef
@@ -46,6 +48,15 @@ storage.load().then(() => {
       bindLabelsKeyboardShortcuts();
       discussionOverComment();
       lastTimeVisitedThread();
+
+      if (storage.get("mrSquashByDefault")) {
+        mrSquashByDefault()
+      }
+
+      if (storage.get("mrRemoveBranchByDefault")) {
+        mrRemoveBranchByDefault()
+      }
+
       break;
     case ROUTES.MRS:
     case ROUTES.ISSUES:

@@ -1,4 +1,17 @@
 export default {
+  mrSquashByDefault: {
+    type: "checkbox",
+    label: "Merge request: Squash - checked by default",
+    description: "",
+    defaultValue: true,
+  },
+  mrRemoveBranchByDefault: {
+    type: "checkbox",
+    label: "Merge request: Remove branch - checked by default",
+    description: "",
+    defaultValue: true,
+  },
+
   assignShortcut: {
     type: "text",
     label: "Assign shortcut <small><a href='https://craig.is/killing/mice#keys'>Supported syntax</a></small>",
