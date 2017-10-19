@@ -12,6 +12,7 @@ https://chrome.google.com/webstore/detail/pogpjdbfdfnmlegpbhdmlebognmbamko
 * Hide repo avatars `configurable`
 * Keyboard shortcuts to toggle labels `configurable`
 * Prefer Discussions over Comments
+* Hide Merge Request footer with "You can merge this merge request manually using the command line" information
 
 ## Future features
 * [ ] Show usernames instead of real names
