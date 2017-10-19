@@ -22,6 +22,8 @@ https://chrome.google.com/webstore/detail/pogpjdbfdfnmlegpbhdmlebognmbamko
 * Categorize labels
 ![](./docs/assets/categorize-labels.png)
 * Discussions sorted by newest first
+* Highlight new events since you last visit
+![](./docs/assets/last-visit.png)
 * `Q` keyboard shortcut to filter own issues/merge requests
 * Keyboard shortcuts to toggle labels `configurable`
 
