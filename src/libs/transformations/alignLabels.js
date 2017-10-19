@@ -1,4 +1,5 @@
 import ROUTES from "../ROUTES";
+import { LABEL_CATEGORY_SEPARATOR } from "../consts";
 
 export default (route, labelCategories) => {
   let itemsClassName;
@@ -21,19 +22,22 @@ export default (route, labelCategories) => {
     labelsEl.classList.add("labels");
 
     const moduleEls = {};
-    labelCategories.split(",").concat(["no-module"]).forEach(module => {
-      const el = document.createElement("div");
-      el.classList.add("labels-module");
-      el.setAttribute("data-module", module);
-      labelsEl.appendChild(el);
-      moduleEls[module] = el;
-    });
+    labelCategories
+      .split(",")
+      .concat(["no-module"])
+      .forEach(module => {
+        const el = document.createElement("div");
+        el.classList.add("labels-module");
+        el.setAttribute("data-module", module);
+        labelsEl.appendChild(el);
+        moduleEls[module] = el;
+      });
 
     const labelsCollection = mrEl.getElementsByClassName("label-link");
     const labelsArray = [].slice.call(labelsCollection);
     labelsArray.forEach(label => {
       const text = label.textContent;
-      const textParts = text.split("/");
+      const textParts = text.split(LABEL_CATEGORY_SEPARATOR);
       const module = textParts[0];
 
       const moduleEl = moduleEls[module] || moduleEls["no-module"];

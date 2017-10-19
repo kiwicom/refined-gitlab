@@ -1,3 +1,5 @@
+import { LABEL_CATEGORY_SEPARATOR } from "../consts";
+
 export default () => {
   const projectUrl = `${window.location.pathname
     .split("/")
@@ -15,7 +17,7 @@ export default () => {
         const labels = res.map(x => x.title);
         resolve(
           labels.reduce((categories, x) => {
-            const parts = x.split(/[/:]/);
+            const parts = x.split(LABEL_CATEGORY_SEPARATOR);
             if (parts.length === 2) {
               const category = parts[0];
               if (!categories.includes(category)) {
