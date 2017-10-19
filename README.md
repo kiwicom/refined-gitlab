@@ -18,6 +18,7 @@ https://chrome.google.com/webstore/detail/pogpjdbfdfnmlegpbhdmlebognmbamko
 
 #### Merge Requests & Issues
 * Categorize labels
+![](./docs/assets/categorize-labels.png)
 * Discussions sorted by newest first
 * `Q` keyboard shortcut to filter own issues/merge requests
 * Keyboard shortcuts to toggle labels `configurable`
