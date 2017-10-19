@@ -1,18 +1,34 @@
 https://chrome.google.com/webstore/detail/pogpjdbfdfnmlegpbhdmlebognmbamko
 
+---
+
+## Version: 🐣 Pre-alpha 🐣
+
+> Expect nothing and you will not be disappointed
+
+---
+
 ## Features
 
-* Categorize labels
-* Expand all diffs by default
-* Discussions on Merge requests and Issues sorted by newest first
-* Force-expanded sidepanel
-* Appended custom links to Pipeline and Deploy sections
-* `Q` keyboard shortcut to filter own issues/merge requests
-* Disable label colors `configurable`
+#### General UI
+* Always-expanded sidepanel
 * Hide repo avatars `configurable`
-* Keyboard shortcuts to toggle labels `configurable`
+* Disable label colors `configurable`
 * Prefer Discussions over Comments
-* Hide Merge Request footer with "You can merge this merge request manually using the command line" information
+
+#### Merge Requests & Issues
+* Categorize labels
+* Discussions sorted by newest first
+* `Q` keyboard shortcut to filter own issues/merge requests
+* Keyboard shortcuts to toggle labels `configurable`
+
+
+#### Merge Requests
+* Hide footer with "You can merge this merge request manually using the command line" information
+* Expand all diffs by default
+* Appended custom links to Pipeline and Deploy sections
+* **Squash** - checked by default `configurable`
+* **Remove source branch** - checked by default `configurable`
 
 ## Future features
 * [ ] Show usernames instead of real names
