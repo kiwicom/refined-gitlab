@@ -22,6 +22,11 @@ export const set = async (key, value, where = "sync") => {
   return chromep.storage[where].set(data);
 };
 
+export const reset = async () => {
+  await chromep.storage.local.clear();
+  await chromep.storage.sync.clear();
+}
+
 export const load = async () => {
   // eslint-disable-next-line
   await migrate()

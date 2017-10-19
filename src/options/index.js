@@ -31,6 +31,18 @@ storage.load().then(() => {
       });
     }
   });
+
+  formEl.innerHTML += "<hr />";
+
+  formEl.innerHTML += `
+    <button id="reset">Reset all settings to default</button>
+  `;
+
+  document.getElementById("reset").addEventListener("click", async () => {
+    await storage.reset();
+    window.alert("Everything is gone. Tabula rasa. Enjoy your fresh start.");
+    window.location.reload();
+  });
 });
 
 formEl.addEventListener("change", ({ target }) => {
