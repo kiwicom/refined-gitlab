@@ -1,6 +1,8 @@
 <img src="./docs/assets/logo.png" alt="Refined GitLab" width="50%" />
 
-https://chrome.google.com/webstore/detail/pogpjdbfdfnmlegpbhdmlebognmbamko
+[Install (published from master branch)](https://chrome.google.com/webstore/detail/pogpjdbfdfnmlegpbhdmlebognmbamko)
+
+[Install BETA (published from develop branch)](https://chrome.google.com/webstore/detail/efkcgkiajnleoaejcecljhnkdmeokiif)
 
 ---
 

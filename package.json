@@ -39,6 +39,7 @@
     "watch": "webpack --watch",
     "release": "cd extension && webstore upload --auto-publish",
     "update-version": "dot-json extension/manifest.json version $(date -u +%y.%-m.%-d.%-H%M)",
+    "append-beta-to-name": "dot-json extension/manifest.json name 'Refined Gitlab BETA'",
     "format": "prettier --trailing-comma --write 'src/**/*.js'",
     "precommit": "lint-staged"
   },

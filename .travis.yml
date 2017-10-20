@@ -1,12 +1,16 @@
 language: node_js
 node_js:
   - 'node'
-env:
-  global:
-    - EXTENSION_ID=pogpjdbfdfnmlegpbhdmlebognmbamko
+
 deploy:
-  provider: script
-  skip_cleanup: true
-  script: npm run build && npm run update-version && npm run release
-  on:
-    branch: master
+  - provider: script
+    skip_cleanup: true
+    script: npm run build && npm run update-version && npm run append-beta-to-name && env EXTENSION_ID=efkcgkiajnleoaejcecljhnkdmeokiif npm run release
+    on:
+      branch: develop
+
+  - provider: script
+    skip_cleanup: true
+    script: npm run build && npm run update-version && env EXTENSION_ID=pogpjdbfdfnmlegpbhdmlebognmbamko npm run release
+    on:
+      branch: master
