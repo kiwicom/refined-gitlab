@@ -21,6 +21,8 @@ https://chrome.google.com/webstore/detail/pogpjdbfdfnmlegpbhdmlebognmbamko
 #### Merge Requests & Issues
 * Categorize labels
 ![](./docs/assets/categorize-labels.png)
+* Enhance labels with date added
+![](./docs/assets/enhanced-labels.png)
 * Discussions sorted by newest first
 * Highlight new events since you last visit
 ![](./docs/assets/last-visit.png)
