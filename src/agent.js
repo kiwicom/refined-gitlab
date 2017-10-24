@@ -10,6 +10,7 @@ import detectProjectSlug from "./libs/helpers/detectProjectSlug";
 import detectProjectLabelCategories from "./libs/helpers/detectProjectLabelCategories";
 import divideLabels from "./libs/transformations/divideLabels";
 import alignLabels from "./libs/transformations/alignLabels";
+import enhanceLabels from "./libs/transformations/enhanceLabels";
 
 const parentElClassNames = ["merge-request", "issue"];
 
@@ -47,6 +48,7 @@ document.addEventListener("refined-gitlab", e => {
         // Enable when it will work properly
         // showUsername(route);
         divideLabels(labelCategories);
+        enhanceLabels();
         break;
       case ROUTES.MRS:
       case ROUTES.ISSUES:
