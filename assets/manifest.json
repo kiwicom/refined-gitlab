@@ -1,7 +1,7 @@
 {
   "manifest_version": 2,
   "name": "Refined Gitlab",
-  "description": "Extension which simplifies Gitlab",
+  "description": "Chrome extension that enhances GitLab",
   "version": "0.4",
   "homepage_url": "https://github.com/kiwicom/refined-gitlab",
   "page_action": {
