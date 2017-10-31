@@ -11,6 +11,7 @@ import detectProjectLabelCategories from "./libs/helpers/detectProjectLabelCateg
 import divideLabels from "./libs/transformations/divideLabels";
 import alignLabels from "./libs/transformations/alignLabels";
 import enhanceLabels from "./libs/transformations/enhanceLabels";
+import * as discussionOverComment from "./libs/transformations/discussionOverComment";
 
 const parentElClassNames = ["merge-request", "issue"];
 
@@ -49,6 +50,7 @@ document.addEventListener("refined-gitlab", e => {
         // showUsername(route);
         divideLabels(labelCategories);
         enhanceLabels();
+        discussionOverComment.agent();
         break;
       case ROUTES.MRS:
       case ROUTES.ISSUES:

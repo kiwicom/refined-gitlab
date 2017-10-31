@@ -13,7 +13,6 @@ import appendTo from "./libs/transformations/appendTo";
 import showUsername from "./libs/transformations/showUsername";
 import bindLabelsKeyboardShortcuts from "./libs/transformations/bindLabelsKeyboardShortcuts";
 import assignMeTo from "./libs/transformations/assignMeTo";
-import discussionOverComment from "./libs/transformations/discussionOverComment";
 import lastTimeVisitedThread from "./libs/transformations/lastTimeVisitedThread";
 import mrSquashByDefault from "./libs/transformations/mrSquashByDefault";
 import mrRemoveBranchByDefault from "./libs/transformations/mrRemoveBranchByDefault";
@@ -46,7 +45,6 @@ storage.load().then(() => {
       expandSidePanel();
       appendTo();
       bindLabelsKeyboardShortcuts();
-      discussionOverComment();
       lastTimeVisitedThread();
 
       if (storage.get("mrSquashByDefault")) {
