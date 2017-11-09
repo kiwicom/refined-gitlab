@@ -1,6 +1,8 @@
 import detectUsername from "../helpers/detectUsername";
 
-export default box => {
+// eslint-disable-next-line no-unused-vars
+export const agent = (STORAGE, route, projectHash) => {
+  const box = "filtered-search-box"
   document.body.onkeydown = e => {
     if (
       !document.getElementsByClassName(box)[0].classList.contains("focus") &&

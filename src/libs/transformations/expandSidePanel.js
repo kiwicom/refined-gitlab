@@ -1,4 +1,5 @@
-export default () => {
+// eslint-disable-next-line no-unused-vars
+export const agent = (STORAGE, route, projectHash) => {
   const classToRemove = "right-sidebar-collapsed";
   const classToAdd = "right-sidebar-expanded";
   const selectorAside = "ASIDE";

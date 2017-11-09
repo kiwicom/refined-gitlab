@@ -1,6 +1,9 @@
 import { LABEL_CATEGORY_SEPARATOR } from "../consts";
 
-export default labelCategories => {
+// eslint-disable-next-line no-unused-vars
+export const agent = (STORAGE, route, projectHash) => {
+  const labelCategories = STORAGE[`labelCategories:${projectHash}`];
+
   const labelsEl = document.getElementsByClassName("issuable-show-labels")[0];
   if (labelsEl !== undefined) {
     const labelsCollection = labelsEl.getElementsByTagName("a");

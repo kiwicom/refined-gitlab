@@ -1,12 +1,12 @@
 import _ from "lodash";
-import * as storage from "./../../options/storage";
 
-export default () => {
+// eslint-disable-next-line no-unused-vars
+export const agent = (STORAGE, route, projectHash) => {
   // FIXME: Optimize
   let alreadyAppendedToDeploySection = false;
 
-  const appendToPipelineSectionString = storage.get("appendToPipelineSection");
-  const appendToDeploySectionString = storage.get("appendToDeploySection");
+  const appendToPipelineSectionString = STORAGE.appendToPipelineSection;
+  const appendToDeploySectionString = STORAGE.appendToDeploySection;
 
   const pipelineEl = document.querySelectorAll(
     ".mr-widget-heading .js-commit-link"

@@ -1,9 +1,9 @@
 /* eslint-disable no-continue,default-case */
-
 import ROUTES from "../ROUTES";
 import getUsername from "../helpers/getUsername";
 
-export default route => {
+// eslint-disable-next-line no-unused-vars
+export const agent = (STORAGE, route, projectHash) => {
   switch (route) {
     case ROUTES.MR:
     case ROUTES.ISSUE:

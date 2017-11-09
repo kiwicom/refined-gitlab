@@ -1,4 +1,5 @@
-export default () => {
+// eslint-disable-next-line no-unused-vars
+export const agent = (STORAGE, route, projectHash) => {
   const labelsEl = document.getElementsByClassName("issuable-show-labels")[0];
   if (labelsEl !== undefined) {
 

@@ -1,8 +1,7 @@
-import * as storage from "./../../options/storage";
-
-export default () => {
-  if (storage.get(`${window.location.pathname}/lastVisitedTime`)) {
-    const time = storage.get(`${window.location.pathname}/lastVisitedTime`);
+// eslint-disable-next-line no-unused-vars
+export const agent = (STORAGE, route, projectHash) => {
+  if (STORAGE[`${window.location.pathname}/lastVisitedTime`]) {
+    const time = STORAGE[`${window.location.pathname}/lastVisitedTime`];
     const date = new Date(time);
     const notes = document.getElementsByClassName(
       "notes main-notes-list timeline"
@@ -29,5 +28,5 @@ export default () => {
       }
     }
   }
-  storage.set(`${window.location.pathname}/lastVisitedTime`, Date.now(), "local");
+  STORAGE.set(`${window.location.pathname}/lastVisitedTime`, Date.now(), "local");
 };

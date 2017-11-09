@@ -1,4 +1,5 @@
-export default () => {
+// eslint-disable-next-line no-unused-vars
+export const agent = (STORAGE, route, projectHash) => {
   const a = location.pathname.split("/");
   if (a[5] === "diffs" && a[3] === "merge_requests") {
     const postfix = "expand_all_diffs=1";

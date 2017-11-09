@@ -1,7 +1,9 @@
 import ROUTES from "../ROUTES";
 import { LABEL_CATEGORY_SEPARATOR } from "../consts";
 
-export default (route, labelCategories) => {
+export const agent = (STORAGE, route, projectHash) => {
+  const labelCategories = STORAGE[`labelCategories:${projectHash}`];
+
   let itemsClassName;
   switch (route) {
     case ROUTES.MRS:
