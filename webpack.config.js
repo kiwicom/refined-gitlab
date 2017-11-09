@@ -1,5 +1,6 @@
 const path = require("path");
 const CopyWebpackPlugin = require("copy-webpack-plugin"); // eslint-disable-line
+const ExtractTextPlugin = require('extract-text-webpack-plugin'); // eslint-disable-line
 
 module.exports = {
   entry: {
@@ -14,6 +15,9 @@ module.exports = {
     filename: "[name].js"
   },
   plugins: [
+    new ExtractTextPlugin({
+      filename: "[name].css",
+    }),
     new CopyWebpackPlugin([{ from: "assets" }]),
     new CopyWebpackPlugin([
       { from: "node_modules/primer-core/build/", to: "core.css" },
@@ -26,6 +30,15 @@ module.exports = {
         test: /\.js$/,
         exclude: /(node_modules)/,
         loader: "babel-loader"
+      }, {
+        test: /\.scss$/,
+        use: ExtractTextPlugin.extract({
+          fallback: 'style-loader', // use style-loader in development
+          use: [
+            "css-loader", // translates CSS into CommonJS
+            "sass-loader", // compiles Sass to CSS
+          ]
+        })
       }
     ]
   }

@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-
+import "./content.scss"
 import * as storage from "./options/storage";
 
 const s = document.createElement("script");

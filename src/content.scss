@@ -8,34 +8,42 @@
   width: 100%;
 }
 
-.content-list .labels-module {
-  display: table-cell;
-  position: relative;
-  padding-left: 5px;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
+.content-list {
+  .labels-module {
+    display: table-cell;
+    position: relative;
+    padding-left: 5px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 
-.content-list .labels-module::before {
-  content: "";
-  position: absolute;
-  right: 0px;
-  width: 1px;
-  top: 3px;
-  bottom: 0px;
-  background: rgba(0, 0, 0, 0.1);
-  z-index: 0;
-}
+    // Separator
+    &::before {
+      content: "";
+      position: absolute;
+      right: 0px;
+      width: 1px;
+      top: 3px;
+      bottom: 0px;
+      background: rgba(0, 0, 0, 0.1);
+      z-index: 0;
+    }
 
-.content-list .labels-module::after {
-  content: attr(data-module);
-  position: absolute;
-  left: 5px;
-  top: 4px;
-  font-size: 12px;
-  opacity: 0.15;
-  z-index: 0;
+    &:last-child::before {
+      display: none;
+    }
+
+    // Label category in background
+    &::after {
+      content: attr(data-module);
+      position: absolute;
+      left: 5px;
+      top: 4px;
+      font-size: 12px;
+      opacity: 0.15;
+      z-index: 0;
+    }
+  }
 }
 
 #content-body .label-link {
