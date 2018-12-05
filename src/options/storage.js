@@ -102,9 +102,6 @@ async function migrate() {
   // eslint-disable-next-line dot-notation
   const lastMigration = (await chromep.storage.sync.get("_lastMigration"))["_lastMigration"];
 
-  console.log("today", today)
-  console.log("lastMigration", lastMigration)
-
   if (
     !lastMigration ||
     Number(lastMigration) < today
