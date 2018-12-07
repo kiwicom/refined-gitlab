@@ -2,9 +2,6 @@ import _ from "lodash";
 import * as storage from "./../../options/storage";
 
 export default () => {
-  // FIXME: Optimize
-  let alreadyAppendedToDeploySection = false;
-
   const appendToPipelineSectionString = storage.get("appendToPipelineSection");
   const appendToDeploySectionString = storage.get("appendToDeploySection");
 
@@ -30,9 +27,10 @@ export default () => {
     );
   }
 
-  setInterval(() => {
+  const timer = setInterval(() => {
     const deployLinkEl = document.getElementsByClassName("js-deploy-url")[0];
-    if (deployLinkEl && !alreadyAppendedToDeploySection) {
+    if (deployLinkEl) {
+      clearInterval(timer)
       const mergedOptions = Object.assign({}, options, {
         deployLink: deployLinkEl.href,
       });
@@ -40,7 +38,6 @@ export default () => {
         "afterend",
         ` | ${_.template(appendToDeploySectionString)(mergedOptions)}`
       );
-      alreadyAppendedToDeploySection = true;
     }
   }, 1000);
 };
