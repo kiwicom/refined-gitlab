@@ -2,7 +2,50 @@
   "name": "refined-gitlab",
   "version": "1.0.0",
   "description": "",
+  "homepage": "https://github.com/kiwicom/refined-gitlab#readme",
+  "bugs": {
+    "url": "https://github.com/kiwicom/refined-gitlab/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kiwicom/refined-gitlab.git"
+  },
+  "license": "ISC",
+  "author": "",
   "main": "popup.js",
+  "scripts": {
+    "append-beta-to-name": "dot-json extension/manifest.json name 'Refined Gitlab BETA'",
+    "build": "webpack",
+    "precommit": "lint-staged",
+    "format": "prettier --trailing-comma --write 'src/**/*.js'",
+    "release": "cd extension && webstore upload --auto-publish",
+    "update-version": "dot-json extension/manifest.json version $(date -u +%y.%-m.%-d.%-H%M)",
+    "watch": "webpack --watch"
+  },
+  "babel": {
+    "plugins": [
+      [
+        "transform-runtime",
+        {
+          "helpers": false,
+          "polyfill": false
+        }
+      ],
+      "transform-object-rest-spread"
+    ],
+    "presets": [
+      [
+        "env",
+        {
+          "targets": {
+            "browsers": [
+              "last 3 Chrome versions"
+            ]
+          }
+        }
+      ]
+    ]
+  },
   "dependencies": {
     "chrome-promise": "^2.0.3",
     "lodash": "^4.17.4",
@@ -33,49 +76,6 @@
     "prettier": "^1.3.1",
     "webext": "^1.9.1-with-submit.1",
     "webpack": "^3.7.1"
-  },
-  "scripts": {
-    "build": "webpack",
-    "watch": "webpack --watch",
-    "release": "cd extension && webstore upload --auto-publish",
-    "update-version": "dot-json extension/manifest.json version $(date -u +%y.%-m.%-d.%-H%M)",
-    "append-beta-to-name": "dot-json extension/manifest.json name 'Refined Gitlab BETA'",
-    "format": "prettier --trailing-comma --write 'src/**/*.js'",
-    "precommit": "lint-staged"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/kiwicom/refined-gitlab.git"
-  },
-  "author": "",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/kiwicom/refined-gitlab/issues"
-  },
-  "homepage": "https://github.com/kiwicom/refined-gitlab#readme",
-  "babel": {
-    "plugins": [
-      [
-        "transform-runtime",
-        {
-          "helpers": false,
-          "polyfill": false
-        }
-      ],
-      "transform-object-rest-spread"
-    ],
-    "presets": [
-      [
-        "env",
-        {
-          "targets": {
-            "browsers": [
-              "last 3 Chrome versions"
-            ]
-          }
-        }
-      ]
-    ]
   },
   "lint-staged": {
     "*.js": [
