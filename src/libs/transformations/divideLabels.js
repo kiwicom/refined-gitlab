@@ -20,7 +20,7 @@ export default labelCategories => {
 
     labelsArray.forEach(labelEl => {
       const text = labelEl.textContent;
-      const textParts = text.split(LABEL_CATEGORY_SEPARATOR);
+      const textParts = text.split(LABEL_CATEGORY_SEPARATOR).map(x => x.trim());
       const module = textParts[0];
       const moduleEl = moduleEls[module] || moduleEls["no-module"];
       moduleEl.appendChild(labelEl);
