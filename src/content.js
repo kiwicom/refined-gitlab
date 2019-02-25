@@ -40,7 +40,7 @@ storage.load().then(() => {
       // Enable when it will work properly
       // showUsername(route);
       assignMeTo();
-      expandAll();
+      // expandAll(); // TODO: Fix and re-enable
       rotateDiscussion("notes-list");
       expandSidePanel();
       appendTo();
