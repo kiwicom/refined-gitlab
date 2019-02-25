@@ -45,8 +45,10 @@ export default (route, labelCategories) => {
     });
 
     // insert
-    mrEl
-      .getElementsByClassName("issue-info-container")[0]
-      .appendChild(labelsEl);
+    const container =
+      mrEl.getElementsByClassName("issue-info-container")[0] ||
+      mrEl.getElementsByClassName("issuable-info-container")[0]; // newer version of GitLab
+
+    container.appendChild(labelsEl);
   });
 };

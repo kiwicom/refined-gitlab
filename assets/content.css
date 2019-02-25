@@ -1,4 +1,6 @@
-.issue-info-container {
+.issue-info-container,
+.issuable-info-container
+{
   flex-wrap: wrap;
 }
 
