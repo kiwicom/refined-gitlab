@@ -11,8 +11,7 @@
   "permissions": [
     "storage",
     "unlimitedStorage",
-    "activeTab",
-    "https://github.com/*"
+    "activeTab"
   ],
   "options_ui": {
     "page": "options.html",
