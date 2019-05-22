@@ -1,7 +1,9 @@
 import injectContentScripts from "webext-dynamic-content-scripts";
+import DPT from "webext-domain-permission-toggle";
 import * as storage from "./options/storage";
 import insight from "./insight";
 
+DPT.addContextMenu();
 injectContentScripts();
 
 storage.load().then(() => {

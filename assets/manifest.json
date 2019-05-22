@@ -10,8 +10,13 @@
   },
   "permissions": [
     "storage",
+    "contextMenus",
     "unlimitedStorage",
     "activeTab"
+  ],
+  "optional_permissions": [
+    "http://*/*",
+    "https://*/*"
   ],
   "options_ui": {
     "page": "options.html",
