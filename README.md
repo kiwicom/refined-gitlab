@@ -63,8 +63,8 @@
 Thx to [@bennokress](https://github.com/bennokress) for 
 [requesting this feature](https://github.com/kiwicom/refined-gitlab/issues/55)
 and [@niksy](https://github.com/niksy) for suggesting implementation
-with [library](https://github.com/bfred-it/webext-domain-permission-toggle/)
-from [@bfred-it](https://github.com/bfred-it)
+with [library](https://github.com/fregante/webext-domain-permission-toggle/)
+from [@fregante](https://github.com/fregante)
 
 </details>
 
