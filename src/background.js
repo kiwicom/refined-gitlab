@@ -1,5 +1,5 @@
-import 'webext-dynamic-content-scripts';
-import addDomainPermissionToggle from 'webext-domain-permission-toggle';
+import "webext-dynamic-content-scripts";
+import addDomainPermissionToggle from "webext-domain-permission-toggle";
 import * as storage from "./options/storage";
 import insight from "./insight";
 
